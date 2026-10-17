@@ -87,7 +87,7 @@ function Timeline() {
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
-    <section className="section timeline" id="timeline" aria-labelledby="timeline-title">
+    <section className="section timeline" id="timeline" tabIndex={-1} aria-labelledby="timeline-title">
       <div className="container">
         <Reveal className="section-heading">
           <div>

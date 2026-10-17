@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import profile from '../data/profile'
+import useActiveSection from '../hooks/useActiveSection'
+
+const sectionIds = ['work', 'timeline', 'about', 'contact']
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const activeSection = useActiveSection(sectionIds)
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -29,10 +33,17 @@ function Navbar() {
             className={`nav-links${menuOpen ? ' is-open' : ''}`}
             aria-label="Primary navigation"
           >
-            <a className="nav-link" href="#work" onClick={closeMenu}>work</a>
-            <a className="nav-link" href="#timeline" onClick={closeMenu}>timeline</a>
-            <a className="nav-link" href="#about" onClick={closeMenu}>about</a>
-            <a className="nav-link" href="#contact" onClick={closeMenu}>contact</a>
+            {sectionIds.map((id) => (
+              <a
+                className={`nav-link${activeSection === id ? ' is-active' : ''}`}
+                href={`#${id}`}
+                aria-current={activeSection === id ? 'true' : undefined}
+                onClick={closeMenu}
+                key={id}
+              >
+                {id}
+              </a>
+            ))}
             <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>
               resume
             </a>

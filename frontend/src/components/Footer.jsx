@@ -18,7 +18,7 @@ function Footer() {
   }
 
   return (
-    <footer id="contact">
+    <footer id="contact" tabIndex={-1}>
       <div className="container contact">
         <Reveal>
           <span className="eyebrow">contact</span>

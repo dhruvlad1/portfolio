@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 
 function Hero() {
   return (
-    <section className="hero" id="top" aria-labelledby="hero-title">
+    <section className="hero" id="top" tabIndex={-1} aria-labelledby="hero-title">
       <div className="container hero-content">
         <span className="eyebrow">dhruv · mumbai</span>
         <h1 id="hero-title">i build software, mostly the <em>ai</em> kind.</h1>

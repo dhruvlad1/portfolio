@@ -3,7 +3,7 @@ import Reveal from './Reveal'
 
 function About() {
   return (
-    <section className="section about" id="about" aria-labelledby="about-title">
+    <section className="section about" id="about" tabIndex={-1} aria-labelledby="about-title">
       <div className="container">
         <div className="about-grid">
           <Reveal>

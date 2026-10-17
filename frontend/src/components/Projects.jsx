@@ -5,7 +5,7 @@ import Reveal from './Reveal'
 
 function Projects() {
   return (
-    <section className="section projects" id="work" aria-labelledby="projects-title">
+    <section className="section projects" id="work" tabIndex={-1} aria-labelledby="projects-title">
       <div className="container">
         <Reveal className="section-heading">
           <div>
