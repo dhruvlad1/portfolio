@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import profile from '../data/profile'
 import useActiveSection from '../hooks/useActiveSection'
+import ThemeToggle from './ThemeToggle'
 
 const sectionIds = ['work', 'timeline', 'about', 'contact']
 
@@ -47,10 +48,12 @@ function Navbar() {
             <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>
               resume
             </a>
+            <ThemeToggle mobile />
           </nav>
           <div className="nav-meta">
             <span className="status">open to opportunities</span>
             <a className="resume-link" href={profile.resumeUrl}>resume</a>
+            <ThemeToggle />
           </div>
         </div>
       </header>

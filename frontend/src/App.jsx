@@ -8,26 +8,29 @@ import SmoothScroll from './components/SmoothScroll'
 import ScrollProgress from './components/ScrollProgress'
 import CursorProvider from './components/CursorProvider'
 import TargetCursor from './components/TargetCursor'
+import ThemeProvider from './components/ThemeProvider'
 import './App.css'
 
 function App() {
   return (
-    <CursorProvider>
-      <TargetCursor />
-      <SmoothScroll>
-        <div className="site-shell">
-          <ScrollProgress />
-          <Navbar />
-          <main id="main-content" tabIndex={-1}>
-            <Hero />
-            <Projects />
-            <Timeline />
-            <About />
-          </main>
-          <Footer />
-        </div>
-      </SmoothScroll>
-    </CursorProvider>
+    <ThemeProvider>
+      <CursorProvider>
+        <TargetCursor />
+        <SmoothScroll>
+          <div className="site-shell">
+            <ScrollProgress />
+            <Navbar />
+            <main id="main-content" tabIndex={-1}>
+              <Hero />
+              <Projects />
+              <Timeline />
+              <About />
+            </main>
+            <Footer />
+          </div>
+        </SmoothScroll>
+      </CursorProvider>
+    </ThemeProvider>
   )
 }
 
