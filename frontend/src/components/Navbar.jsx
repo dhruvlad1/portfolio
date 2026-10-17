@@ -30,6 +30,7 @@ function Navbar() {
             aria-label="Primary navigation"
           >
             <a className="nav-link" href="#work" onClick={closeMenu}>work</a>
+            <a className="nav-link" href="#timeline" onClick={closeMenu}>timeline</a>
             <a className="nav-link" href="#about" onClick={closeMenu}>about</a>
             <a className="nav-link" href="#contact" onClick={closeMenu}>contact</a>
             <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>
