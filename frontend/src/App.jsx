@@ -6,23 +6,28 @@ import About from './components/About'
 import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollProgress from './components/ScrollProgress'
+import CursorProvider from './components/CursorProvider'
+import Crosshair from './components/Crosshair'
 import './App.css'
 
 function App() {
   return (
-    <SmoothScroll>
-      <div className="site-shell">
-        <ScrollProgress />
-        <Navbar />
-        <main id="main-content" tabIndex={-1}>
-          <Hero />
-          <Projects />
-          <Timeline />
-          <About />
-        </main>
-        <Footer />
-      </div>
-    </SmoothScroll>
+    <CursorProvider>
+      <Crosshair />
+      <SmoothScroll>
+        <div className="site-shell">
+          <ScrollProgress />
+          <Navbar />
+          <main id="main-content" tabIndex={-1}>
+            <Hero />
+            <Projects />
+            <Timeline />
+            <About />
+          </main>
+          <Footer />
+        </div>
+      </SmoothScroll>
+    </CursorProvider>
   )
 }
 

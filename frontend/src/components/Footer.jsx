@@ -2,6 +2,7 @@ import { ArrowUpRight, Check, Copy, Mail } from 'lucide-react'
 import { useState } from 'react'
 import profile from '../data/profile'
 import Reveal from './Reveal'
+import CursorToggle from './CursorToggle'
 
 function Footer() {
   const [copied, setCopied] = useState(false)
@@ -66,6 +67,7 @@ function Footer() {
           <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
             linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
           </a>
+          <CursorToggle />
         </div>
         <span>© {year} {profile.fullName}</span>
       </div>

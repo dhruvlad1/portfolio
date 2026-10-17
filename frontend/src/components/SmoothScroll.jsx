@@ -42,7 +42,7 @@ function SmoothScroll({ children }) {
       const anchor = event.target.closest('a[href^="#"]')
       if (!anchor || anchor.target === '_blank') return
       const hash = anchor.getAttribute('href')
-      if (!hash || (hash !== '#top' && !document.querySelector(hash))) return
+      if (!hash || hash === '#' || (hash !== '#top' && !document.querySelector(hash))) return
 
       event.preventDefault()
       scrollToHash(hash)
