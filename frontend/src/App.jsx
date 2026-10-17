@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import Projects from './components/Projects'
 import Timeline from './components/Timeline'
 import About from './components/About'
+import CodingSection from './components/CodingSection'
 import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollProgress from './components/ScrollProgress'
@@ -24,6 +25,7 @@ function App() {
               <Hero />
               <Timeline />
               <Projects />
+              <CodingSection />
               <About />
             </main>
             <Footer />

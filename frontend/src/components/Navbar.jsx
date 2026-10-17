@@ -5,7 +5,11 @@ import ThemeToggle from './ThemeToggle'
 import { ResumeIcon } from './icons'
 import DecryptText from './DecryptText'
 
-const sectionIds = ['timeline', 'work', 'about', 'contact']
+const sectionIds = ['timeline', 'work', 'dsa', 'about', 'contact']
+
+const sectionLabels = {
+  dsa: 'DSA',
+}
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -44,7 +48,7 @@ function Navbar() {
                 onClick={closeMenu}
                 key={id}
               >
-                {id}
+                {sectionLabels[id] || id}
               </a>
             ))}
             <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>

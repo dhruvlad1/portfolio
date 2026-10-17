@@ -1,10 +1,8 @@
 import about from '../data/about'
 import Reveal from './Reveal'
-import Rich, { stripMarkers } from './Rich'
+import Rich from './Rich'
 import DecryptText from './DecryptText'
 import ScrollRevealText from './ScrollRevealText'
-import CountUp from './CountUp'
-import CodingStats from './CodingStats'
 
 function About() {
   return (
@@ -30,16 +28,6 @@ function About() {
                 ))}
               </dl>
             </Reveal>
-            <Reveal className="about-stats" delay={0.1}>
-              <ul>
-                {about.stats.map((stat) => (
-                  <li key={stat.label}>
-                    <strong><CountUp value={stripMarkers(stat.value)} /></strong>
-                    <span>{stat.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
           </div>
         </div>
         <Reveal className="skills-block" delay={0.15}>
@@ -57,9 +45,6 @@ function About() {
               </div>
             ))}
           </dl>
-        </Reveal>
-        <Reveal className="coding-stats-block" delay={0.2}>
-          <CodingStats />
         </Reveal>
       </div>
     </section>

@@ -1,6 +1,4 @@
 import codingStats from '../data/codingStats.json'
-import { formattedAsOf } from '../data/about'
-import DecryptText from './DecryptText'
 import CountUp from './CountUp'
 import { stripMarkers } from './Rich'
 import { CodeChefIcon, CodeforcesIcon, LeetCodeIcon } from './icons'
@@ -19,7 +17,6 @@ function NumberValue({ value, suffix = '' }) {
 function CodingStats() {
   return (
     <>
-      <DecryptText className="eyebrow" text="competitive programming" />
       <ul className="coding-stats-list">
         {platformRows.map(({ key, name, Icon }) => {
           const platform = codingStats.platforms[key]
@@ -37,6 +34,8 @@ function CodingStats() {
           const ratingLabel = platform.rating === null
             ? `maximum ${platform.maxRating}`
             : `rating ${platform.rating}, maximum ${platform.maxRating}`
+          const contestsLabel = platform.contests === null ? '' : `${platform.contests} contests attended, `
+          const accessibleDescription = `${name}, ${platform.username}, ${ratingLabel}, ${accessibleStanding}, ${contestsLabel}${platform.solved} problems solved`
 
           return (
             <li className="coding-stat-row" key={key}>
@@ -45,7 +44,7 @@ function CodingStats() {
                 href={platform.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label={`${name} profile ${platform.username} (opens in a new tab)`}
+                aria-label={`${accessibleDescription} (opens in a new tab)`}
               >
                 <Icon />
                 <span>
@@ -59,6 +58,9 @@ function CodingStats() {
               <span className="coding-stat-standing">
                 <span className="hl">{accessibleStanding}</span>
               </span>
+              <span className="coding-stat-contests">
+                {platform.contests !== null && <><NumberValue value={platform.contests} suffix=" contests" /></>}
+              </span>
               <span className="coding-stat-solved">
                 <NumberValue value={platform.solved} suffix={platform.solved !== null ? ' solved' : ''} />
               </span>
@@ -70,7 +72,7 @@ function CodingStats() {
         })}
       </ul>
       <p className="coding-stats-as-of" title="refreshed daily by a GitHub Action">
-        as of {formattedAsOf} · refreshed daily
+        as of {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'Asia/Kolkata' }).format(new Date(`${codingStats.asOf}T00:00:00Z`))} · refreshed daily
       </p>
     </>
   )

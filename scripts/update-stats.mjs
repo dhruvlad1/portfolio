@@ -83,10 +83,12 @@ function parseCodeChef(html, previous) {
   const highestMatch = html.match(/Highest\s+Rating[\s\S]{0,200}?([\d,]{3,})/i)
   const starsMatch = html.match(/(\d+)\s*★|rating-star[^>]*>\s*(\d+)/i)
   const solvedMatch = html.match(/Total\s+Problems\s+Solved\s*:?\s*(?:<\/?[^>]*>\s*)*([\d,]+)/i)
+  const contestsMatch = html.match(/No\.\s*of\s*Contests\s*Participated[\s\S]{0,300}?(\d[\d,]*)/i)
   setIfValid(next, 'rating', ratingMatch ? Number(ratingMatch[1].replace(/,/g, '')) : null)
   setIfValid(next, 'maxRating', highestMatch ? extractNumber(highestMatch[1]) : null)
   setIfValid(next, 'stars', starsMatch ? Number(starsMatch[1] || starsMatch[2]) : null)
   setIfValid(next, 'solved', solvedMatch ? extractNumber(solvedMatch[1]) : null)
+  setIfValid(next, 'contests', contestsMatch ? extractNumber(contestsMatch[1]) : null)
   return next
 }
 
@@ -132,10 +134,16 @@ async function updateLeetCode(previous) {
     maxRating: Number.isFinite(maxRating) && maxRating !== 0,
     badge: typeof badge === 'string' && badge.length > 0,
   }
+  const attendedContests = Number(contestRanking?.attendedContestsCount)
+  const historyContestCount = contestHistory.filter((item) => item.attended).length
+  const contests = Number.isFinite(attendedContests) && attendedContests !== 0
+    ? attendedContests
+    : historyContestCount
   setIfValid(next, 'solved', Number(allSolved))
   setIfValid(next, 'rating', rating)
   setIfValid(next, 'maxRating', maxRating)
   if (contestFields.badge) next.badge = badge
+  setIfValid(next, 'contests', contests)
   return { data: next, contestFields }
 }
 
@@ -151,6 +159,9 @@ async function updateCodeforces(previous) {
   const statusResponse = await fetchWithRetries('https://codeforces.com/api/user.status?handle=laddhruv495')
   const status = await statusResponse.json()
   if (status.status !== 'OK' || !Array.isArray(status.result)) throw new Error('user.status response did not contain submissions')
+  const ratingResponse = await fetchWithRetries('https://codeforces.com/api/user.rating?handle=laddhruv495')
+  const ratingHistory = await ratingResponse.json()
+  if (ratingHistory.status !== 'OK' || !Array.isArray(ratingHistory.result)) throw new Error('user.rating response did not contain contest history')
   const solved = new Set()
   for (const submission of status.result) {
     if (submission.verdict === 'OK' && submission.problem?.contestId && submission.problem?.index) {
@@ -163,6 +174,7 @@ async function updateCodeforces(previous) {
   setIfValid(next, 'maxRating', Number(user.maxRating))
   if (typeof user.rank === 'string' && user.rank) next.rank = user.rank
   setIfValid(next, 'solved', solved.size)
+  setIfValid(next, 'contests', ratingHistory.result.length)
   return next
 }
 
@@ -208,7 +220,11 @@ async function main() {
 
   const solved = Object.values(next.platforms).map((platform) => platform.solved)
   if (solved.every((value) => typeof value === 'number' && Number.isFinite(value))) {
-    next.totals = { solved: solved.reduce((sum, value) => sum + value, 0), approx: false }
+    next.totals = { ...next.totals, solved: solved.reduce((sum, value) => sum + value, 0), approx: false }
+  }
+  const contests = Object.values(next.platforms).map((platform) => platform.contests)
+  if (contests.every((value) => typeof value === 'number' && Number.isFinite(value))) {
+    next.totals.contests = contests.reduce((sum, value) => sum + value, 0)
   }
 
   if (dataChanged(original, next)) {
@@ -216,18 +232,32 @@ async function main() {
     await writeFile(dataPath, `${JSON.stringify(next, null, 2)}\n`)
   }
 
-  console.table(Object.entries(next.platforms).map(([platform, values]) => ({
+  console.table([
+    ...Object.entries(next.platforms).map(([platform, values]) => ({
     platform,
     rating: values.rating,
     maxRating: values.maxRating,
     badge: values.badge,
     solved: values.solved,
+    contests: values.contests,
     source: values.source,
     contestSource: values.contestSource || '-',
     liveContestFields: liveContestFields[platform]
       ? Object.entries(liveContestFields[platform]).filter(([, live]) => live).map(([field]) => field).join(', ') || '-'
       : '-',
-  })))
+    })),
+    {
+      platform: 'total',
+      rating: '-',
+      maxRating: '-',
+      badge: '-',
+      solved: next.totals.solved,
+      contests: next.totals.contests,
+      source: next.totals.approx ? 'fallback' : 'live',
+      contestSource: '-',
+      liveContestFields: '-',
+    },
+  ])
 }
 
 main().catch((error) => {

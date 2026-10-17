@@ -2,7 +2,8 @@
   "asOf": "2026-10-18",
   "totals": {
     "solved": 765,
-    "approx": false
+    "approx": false,
+    "contests": 48
   },
   "platforms": {
     "leetcode": {
@@ -12,6 +13,7 @@
       "maxRating": 1981,
       "badge": "Knight",
       "solved": 596,
+      "contests": 28,
       "source": "live",
       "contestSource": "live"
     },
@@ -22,6 +24,7 @@
       "maxRating": 1569,
       "stars": 2,
       "solved": 90,
+      "contests": 15,
       "source": "live"
     },
     "codeforces": {
@@ -31,6 +34,7 @@
       "maxRating": 1195,
       "rank": "newbie",
       "solved": 79,
+      "contests": 5,
       "source": "live"
     }
   }
