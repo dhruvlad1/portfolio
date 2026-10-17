@@ -1,4 +1,6 @@
 .site-shell {
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
   overflow-x: clip;
 }
@@ -54,8 +56,8 @@
   top: 0;
   width: 100%;
   border-bottom: 1px solid var(--border);
-  background: rgba(16, 16, 16, 0.92);
-  backdrop-filter: blur(12px);
+  background: rgba(10, 11, 16, 0.7);
+  backdrop-filter: blur(14px);
 }
 
 .navbar-inner {
@@ -194,6 +196,20 @@
   opacity: 0.7;
 }
 
+.hero::after {
+  position: absolute;
+  z-index: 0;
+  top: 4%;
+  right: 6%;
+  width: min(62vw, 760px);
+  height: min(62vw, 760px);
+  pointer-events: none;
+  background: radial-gradient(circle at 65% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 62%),
+    radial-gradient(circle at 30% 70%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 58%);
+  content: '';
+  filter: blur(18px);
+}
+
 .hero-content {
   position: relative;
   z-index: 1;
@@ -213,7 +229,13 @@
 
 .hero h1 em {
   color: var(--accent);
-  font-style: normal;
+  background: var(--accent-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  font-family: var(--serif);
+  font-size: 1.08em;
+  font-style: italic;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-description {
@@ -245,14 +267,15 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.03em;
-  border-radius: var(--radius-sm);
-  transition: transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+  border-radius: var(--radius-button);
+  transition: transform var(--transition-fast), background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .button:hover,
 .button:focus-visible {
-  color: var(--accent);
-  background: transparent;
+  color: var(--bg);
+  background: var(--accent);
+  box-shadow: 0 12px 28px -14px color-mix(in srgb, var(--accent) 90%, transparent);
   transform: translateY(-2px);
 }
 
@@ -328,6 +351,8 @@
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--surface-soft);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .marquee-track {
@@ -340,7 +365,7 @@
   display: flex;
   flex-shrink: 0;
   padding: 20px 0;
-  color: var(--muted);
+  color: color-mix(in srgb, var(--muted) 72%, transparent);
   font-family: var(--heading);
   font-size: 13px;
   font-weight: 600;
@@ -389,13 +414,15 @@
   padding: 28px;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: var(--radius-sm);
-  transition: border-color var(--transition-base), transform var(--transition-base);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .project-card:hover {
   border-color: var(--border-strong);
-  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.6);
+  transform: translateY(-4px);
 }
 
 .project-card--even {
@@ -411,19 +438,21 @@
 .project-preview {
   position: relative;
   display: grid;
-  min-height: 235px;
+  min-height: 0;
   flex: 1;
+  aspect-ratio: 16 / 10;
   place-items: center;
   margin: var(--space-5) 0 var(--space-7);
   overflow: hidden;
   border: 1px solid var(--border);
-  background: #131313;
+  background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 48%, transparent), transparent 48%),
+    radial-gradient(circle at 78% 72%, color-mix(in srgb, var(--accent-2) 34%, transparent), transparent 52%),
+    var(--surface-raised);
 }
 
 .project-preview::before,
 .project-preview::after {
-  position: absolute;
-  content: '';
+  display: none;
 }
 
 .project-preview::before {
@@ -493,6 +522,7 @@
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
+  border-radius: 999px;
 }
 
 .project-links {
@@ -612,6 +642,7 @@
     display: none;
     padding: 20px;
     border: 1px solid var(--border);
+    border-radius: var(--radius-card);
     background: var(--surface);
   }
 
@@ -667,6 +698,10 @@
   .project-card--even {
     min-height: 440px;
     margin-top: 0;
+  }
+
+  .project-preview {
+    flex: 0 1 auto;
   }
 
   .about-grid {
