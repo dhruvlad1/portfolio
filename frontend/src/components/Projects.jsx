@@ -1,5 +1,6 @@
-import projects from '../data/projects'
 import { ArrowUpRight } from 'lucide-react'
+import projects from '../data/projects'
+import ProjectMedia from './ProjectMedia'
 import Reveal from './Reveal'
 
 function Projects() {
@@ -8,38 +9,39 @@ function Projects() {
       <div className="container">
         <Reveal className="section-heading">
           <div>
-            <span className="eyebrow">selected work</span>
+            <span className="eyebrow">featured work</span>
             <h2 className="section-title" id="projects-title">selected work.</h2>
           </div>
           <span className="section-index">/ {String(projects.length).padStart(2, '0')}</span>
         </Reveal>
-        <div className="project-grid">
-          {projects.map((project, index) => (
-            <Reveal
-              className="project-reveal"
-              delay={Math.min(index, 4) * 0.06}
-              key={project.id}
-            >
-            <article
-              className={`project-card${index % 2 === 1 ? ' project-card--even' : ''}`}
-            >
-              <span className="project-number">{project.number}</span>
-              <div className="project-preview" aria-label={`${project.title} preview placeholder`}>
-                <span className="preview-word">{project.title}</span>
-              </div>
-              <p className="project-tagline">{project.tagline}</p>
-              <h3 className="project-title">{project.title}</h3>
-              <p className="project-description">{project.description}</p>
-              <div className="project-meta">
-                <div className="tech-list" aria-label="Technologies">
-                  {project.tech.map((technology) => <span key={technology}>{technology}</span>)}
+        <div className="project-list">
+          {projects.map((project) => (
+            <Reveal className="project-reveal" key={project.id}>
+              <article className="project-row">
+                <ProjectMedia media={project.media} title={project.title} />
+                <div className="project-content">
+                  <span className="project-number">{project.number} · {project.year}</span>
+                  <h3 className="project-title">{project.title}</h3>
+                  <p className="project-tagline">{project.tagline}</p>
+                  <p className="project-description">{project.description}</p>
+                  <ul className="project-highlights">
+                    {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                  </ul>
+                  <div className="tech-list" aria-label="Technologies">
+                    {project.tech.map((technology) => <span key={technology}>{technology}</span>)}
+                  </div>
+                  <div className="project-links">
+                    <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">
+                      github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+                    </a>
+                    {project.links.live && (
+                      <a className="text-link" href={project.links.live} target="_blank" rel="noreferrer">
+                        live <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+                      </a>
+                    )}
+                  </div>
                 </div>
-                <div className="project-links">
-                  <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} /></a>
-                  <a className="text-link" href={project.links.live}>live demo <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} /></a>
-                </div>
-              </div>
-            </article>
+              </article>
             </Reveal>
           ))}
         </div>

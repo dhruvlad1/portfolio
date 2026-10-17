@@ -1,5 +1,5 @@
 import profile from '../data/profile'
-import { ArrowUpRight, BriefcaseBusiness, CodeXml, Mail } from 'lucide-react'
+import { ArrowUpRight, Mail } from 'lucide-react'
 import Reveal from './Reveal'
 
 function Footer() {
@@ -19,10 +19,10 @@ function Footer() {
         <span className="footer-name">{profile.name.toUpperCase()}.</span>
         <div className="footer-links">
           <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-            <CodeXml aria-hidden="true" size={16} strokeWidth={1.75} /> github
+            github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
           </a>
           <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-            <BriefcaseBusiness aria-hidden="true" size={16} strokeWidth={1.75} /> linkedin
+            linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
           </a>
         </div>
         <span>© {year} {profile.name}</span>

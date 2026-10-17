@@ -1,5 +1,5 @@
 import profile from '../data/profile'
-import { ArrowUpRight, BriefcaseBusiness, CodeXml } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 
 function Hero() {
   return (
@@ -19,10 +19,10 @@ function Hero() {
           <span className="social-label">find me on</span>
           <div className="social-links">
             <a href={profile.github} target="_blank" rel="noreferrer">
-              <CodeXml aria-hidden="true" size={16} strokeWidth={1.75} /> github
+              github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
-              <BriefcaseBusiness aria-hidden="true" size={16} strokeWidth={1.75} /> linkedin
+              linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
           </div>
         </div>
