@@ -12,7 +12,7 @@ export const projects = [
     ],
     tech: ['Python', 'Sentence Transformers', 'FAISS', 'Streamlit', 'Groq'],
     links: {
-      github: 'https://github.com/dhruvlad1',
+      github: 'https://github.com/dhruvlad1/FinSight',
       live: '',
     },
     media: [],
@@ -30,7 +30,7 @@ export const projects = [
     ],
     tech: ['React', 'Tailwind CSS', 'Spring Boot', 'PostgreSQL', 'Docker'],
     links: {
-      github: 'https://github.com/dhruvlad1',
+      github: 'https://github.com/dhruvlad1/Voyexa',
       live: '',
     },
     media: [],
@@ -48,7 +48,7 @@ export const projects = [
     ],
     tech: ['Python', 'PySide6', 'OpenCV', 'MediaPipe', 'PyAutoGUI'],
     links: {
-      github: 'https://github.com/dhruvlad1',
+      github: 'https://github.com/dhruvlad1/GestureFlow',
       live: '',
     },
     media: [],
@@ -66,7 +66,7 @@ export const projects = [
     ],
     tech: ['Python', 'PyTorch', 'TorchVision', 'NLTK', 'CUDA'],
     links: {
-      github: 'https://github.com/dhruvlad1',
+      github: 'https://github.com/dhruvlad1/Visual-Semantic-Encoder',
       live: '',
     },
     media: [],
