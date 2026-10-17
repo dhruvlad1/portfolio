@@ -633,18 +633,124 @@
   font-size: var(--font-size-xs);
 }
 
-.about-copy {
-  max-width: 60ch;
-  color: var(--text);
-  font-family: var(--heading);
-  font-size: clamp(1.8rem, 3.5vw, 3.3rem);
-  letter-spacing: -0.04em;
-  line-height: 1.05;
+.about-details {
+  min-width: 0;
 }
 
-.about-copy strong {
+.about-statement {
+  max-width: 28ch;
+  margin: 0;
   color: var(--text);
+  font-family: var(--heading);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.about-body {
+  max-width: 60ch;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.about-facts {
+  margin-top: 40px;
+}
+
+.about-facts dl,
+.about-stats ul,
+.skills-list {
+  margin: 0;
+  padding: 0;
+}
+
+.about-fact {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 24px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+
+.about-fact dt,
+.skill-row dt {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+}
+
+.about-fact dd {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--font-size-sm);
+}
+
+.about-stats {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.about-stats ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  list-style: none;
+}
+
+.about-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.about-stats strong {
+  color: var(--text);
+  font-family: var(--heading);
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.about-stats span {
+  max-width: 28ch;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  line-height: 1.5;
+}
+
+.skills-block {
+  margin-top: 64px;
+  padding-top: 64px;
+  border-top: 1px solid var(--border);
+}
+
+.skills-list {
+  margin-top: 28px;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 24px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.skill-row dd {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+}
+
+.skill-slash {
+  color: var(--muted);
 }
 
 .contact {
@@ -773,6 +879,20 @@
   .about-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .about-details {
+    margin-top: 34px;
+  }
+
+  .skills-block {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+
+  .skill-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .timeline-line {
