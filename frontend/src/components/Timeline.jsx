@@ -1,4 +1,5 @@
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
 import timeline from '../data/timeline'
 import Reveal from './Reveal'
@@ -38,6 +39,18 @@ function TimelineEntry({ item, delay, child = false }) {
             <div className="timeline-badges" aria-label="Highlights">
               {item.badges.map((badge) => <span key={badge}>{badge}</span>)}
             </div>
+          )}
+          {item.link && (
+            <a
+              className="timeline-proof-link"
+              href={item.link.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={`${item.link.label} for ${item.title} (opens in a new tab)`}
+            >
+              {item.link.label}
+              <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+            </a>
           )}
         </div>
       </div>

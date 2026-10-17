@@ -28,6 +28,10 @@ const timeline = [
         org: 'Hacktoberfest 2025',
         summary: 'merged pull requests across a mix of open-source repositories.',
         badges: ['6+ merged PRs', 'supercontributor badge'],
+        link: {
+          label: 'view badge',
+          href: 'https://www.holopin.io/@dhruvlad1#badges',
+        },
       },
       {
         id: 'technovanza',

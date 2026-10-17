@@ -655,6 +655,27 @@
   font-size: var(--font-size-xs);
 }
 
+.timeline-proof-link {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 4px;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+}
+
+.timeline-proof-link:hover,
+.timeline-proof-link:focus-visible {
+  color: var(--text);
+  text-decoration-color: var(--accent);
+}
+
 .timeline-branch {
   position: relative;
   padding: 0 0 40px;
