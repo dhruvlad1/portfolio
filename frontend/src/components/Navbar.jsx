@@ -4,7 +4,7 @@ import useActiveSection from '../hooks/useActiveSection'
 import ThemeToggle from './ThemeToggle'
 import { ResumeIcon } from './icons'
 
-const sectionIds = ['work', 'timeline', 'about', 'contact']
+const sectionIds = ['timeline', 'work', 'about', 'contact']
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)

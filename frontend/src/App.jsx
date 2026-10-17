@@ -22,8 +22,8 @@ function App() {
             <Navbar />
             <main id="main-content" tabIndex={-1}>
               <Hero />
-              <Projects />
               <Timeline />
+              <Projects />
               <About />
             </main>
             <Footer />
