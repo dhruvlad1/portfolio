@@ -105,17 +105,38 @@ async function updateLeetCode(previous) {
   const payload = await response.json()
   if (payload.errors?.length || !payload.data?.matchedUser) throw new Error('GraphQL response did not contain matched user data')
   const user = payload.data.matchedUser
+  const contestRanking = payload.data.userContestRanking
+  const contestHistory = Array.isArray(payload.data.userContestRankingHistory)
+    ? payload.data.userContestRankingHistory
+    : []
+  if (process.env.DEBUG_LEETCODE === '1') {
+    console.log('LeetCode contest debug:', JSON.stringify({
+      userContestRanking: contestRanking,
+      userContestRankingHistoryLength: contestHistory.length,
+      userContestRankingHistoryLast3: contestHistory.slice(-3),
+    }, null, 2))
+  }
   const next = { ...previous }
   const allSolved = user.submitStatsGlobal?.acSubmissionNum?.find((item) => item.difficulty === 'All')?.count
-  const rating = user.userContestRanking?.rating
-  const badge = user.userContestRanking?.badge?.name
-  const history = user.userContestRankingHistory?.filter((item) => item.attended && Number.isFinite(Number(item.rating)))
-  const maxRating = history?.length ? Math.round(Math.max(...history.map((item) => Number(item.rating)))) : null
+  const attendedHistory = contestHistory.filter((item) => item.attended && Number.isFinite(Number(item.rating)))
+  const latestHistoryRating = attendedHistory.length ? Number(attendedHistory.at(-1).rating) : null
+  const rating = Number.isFinite(Number(contestRanking?.rating))
+    ? Math.round(Number(contestRanking.rating))
+    : latestHistoryRating
+  const maxRating = attendedHistory.length
+    ? Math.round(Math.max(...attendedHistory.map((item) => Number(item.rating))))
+    : null
+  const badge = contestRanking?.badge?.name
+  const contestFields = {
+    rating: Number.isFinite(rating) && rating !== 0,
+    maxRating: Number.isFinite(maxRating) && maxRating !== 0,
+    badge: typeof badge === 'string' && badge.length > 0,
+  }
   setIfValid(next, 'solved', Number(allSolved))
-  setIfValid(next, 'rating', Number(rating))
+  setIfValid(next, 'rating', rating)
   setIfValid(next, 'maxRating', maxRating)
-  if (typeof badge === 'string' && badge) next.badge = badge
-  return next
+  if (contestFields.badge) next.badge = badge
+  return { data: next, contestFields }
 }
 
 async function updateCodeChef(previous) {
@@ -162,12 +183,23 @@ async function main() {
     ['codechef', updateCodeChef],
     ['codeforces', updateCodeforces],
   ]
+  const liveContestFields = {}
 
   for (const [platform, update] of updates) {
     try {
-      next.platforms[platform] = {
-        ...await update(next.platforms[platform]),
-        source: 'live',
+      const result = await update(next.platforms[platform])
+      if (platform === 'leetcode') {
+        next.platforms[platform] = {
+          ...result.data,
+          source: Object.values(result.contestFields).some(Boolean) ? 'live' : 'fallback',
+          contestSource: Object.values(result.contestFields).some(Boolean) ? 'live' : 'fallback',
+        }
+        liveContestFields[platform] = result.contestFields
+      } else {
+        next.platforms[platform] = {
+          ...result,
+          source: 'live',
+        }
       }
     } catch (error) {
       warn(platform, error instanceof Error ? error.message : String(error))
@@ -188,8 +220,13 @@ async function main() {
     platform,
     rating: values.rating,
     maxRating: values.maxRating,
+    badge: values.badge,
     solved: values.solved,
     source: values.source,
+    contestSource: values.contestSource || '-',
+    liveContestFields: liveContestFields[platform]
+      ? Object.entries(liveContestFields[platform]).filter(([, live]) => live).map(([field]) => field).join(', ') || '-'
+      : '-',
   })))
 }
 

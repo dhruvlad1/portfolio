@@ -1,5 +1,6 @@
 import { BadgeCheck, FileText, Globe, Mail } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa6'
+import { SiCodechef, SiCodeforces, SiLeetcode } from 'react-icons/si'
 
 function GitHubIcon({ size = 16 }) {
   return <FaGithub size={size} className="link-icon link-icon--brand" aria-hidden="true" focusable="false" />
@@ -25,4 +26,26 @@ function BadgeIcon({ size = 16 }) {
   return <BadgeCheck size={size} strokeWidth={1.75} aria-hidden="true" className="link-icon" />
 }
 
-export { BadgeIcon, GitHubIcon, LinkedInIcon, LiveIcon, MailIcon, ResumeIcon }
+function LeetCodeIcon({ size = 16 }) {
+  return <SiLeetcode size={size} className="link-icon link-icon--brand" aria-hidden="true" focusable="false" />
+}
+
+function CodeChefIcon({ size = 16 }) {
+  return <SiCodechef size={size} className="link-icon link-icon--brand" aria-hidden="true" focusable="false" />
+}
+
+function CodeforcesIcon({ size = 16 }) {
+  return <SiCodeforces size={size} className="link-icon link-icon--brand" aria-hidden="true" focusable="false" />
+}
+
+export {
+  BadgeIcon,
+  CodeChefIcon,
+  CodeforcesIcon,
+  GitHubIcon,
+  LeetCodeIcon,
+  LinkedInIcon,
+  LiveIcon,
+  MailIcon,
+  ResumeIcon,
+}

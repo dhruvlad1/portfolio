@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-10-17",
+  "asOf": "2026-10-18",
   "totals": {
     "solved": 765,
     "approx": false
@@ -8,11 +8,12 @@
     "leetcode": {
       "username": "dhruvcodes16",
       "url": "https://leetcode.com/u/dhruvcodes16/",
-      "rating": null,
+      "rating": 1981,
       "maxRating": 1981,
       "badge": "Knight",
       "solved": 596,
-      "source": "live"
+      "source": "live",
+      "contestSource": "live"
     },
     "codechef": {
       "username": "dhruvcodes16",

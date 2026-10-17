@@ -1006,6 +1006,97 @@ a .hl-warm {
   border-top: 1px solid var(--border);
 }
 
+.coding-stats-block {
+  margin-top: 64px;
+  padding-top: 64px;
+  border-top: 1px solid var(--border);
+}
+
+.coding-stats-list {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coding-stat-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(130px, 0.8fr) minmax(110px, 0.7fr) minmax(90px, 0.6fr) auto;
+  min-width: 0;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+}
+
+.coding-stat-row:first-child {
+  border-top: 0;
+}
+
+.coding-stat-platform {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  transition: color var(--transition-fast);
+}
+
+.coding-stat-platform:hover,
+.coding-stat-platform:focus-visible {
+  color: var(--text);
+}
+
+.coding-stat-platform > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.coding-stat-platform strong {
+  color: inherit;
+  font-family: var(--heading);
+  font-size: var(--font-size-link);
+  font-weight: 500;
+}
+
+.coding-stat-platform small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--font-size-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coding-stat-rating,
+.coding-stat-standing,
+.coding-stat-solved {
+  min-width: 0;
+}
+
+.coding-stat-number {
+  color: var(--accent-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.coding-stat-solved {
+  color: var(--muted);
+}
+
+.coding-stat-cached {
+  color: var(--muted);
+  font-size: var(--font-size-xs);
+}
+
+.coding-stats-as-of {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--font-size-xs);
+}
+
 .skills-list {
   margin-top: 28px;
 }
@@ -1269,6 +1360,25 @@ footer {
   .skills-block {
     margin-top: 48px;
     padding-top: 48px;
+  }
+
+  .coding-stats-block {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+
+  .coding-stat-row {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 10px 16px;
+  }
+
+  .coding-stat-platform {
+    grid-column: 1 / -1;
+  }
+
+  .coding-stat-cached {
+    justify-self: end;
   }
 
   .skill-row {

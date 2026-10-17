@@ -4,6 +4,7 @@ import Rich, { stripMarkers } from './Rich'
 import DecryptText from './DecryptText'
 import ScrollRevealText from './ScrollRevealText'
 import CountUp from './CountUp'
+import CodingStats from './CodingStats'
 
 function About() {
   return (
@@ -56,6 +57,9 @@ function About() {
               </div>
             ))}
           </dl>
+        </Reveal>
+        <Reveal className="coding-stats-block" delay={0.2}>
+          <CodingStats />
         </Reveal>
       </div>
     </section>
