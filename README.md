@@ -28,8 +28,7 @@ Deploy with Vercel:
 4. Use `npm run build` as the build command.
 5. Use `dist` as the output directory.
 
-Before deploying, replace `REPLACE-ME` in `frontend/index.html`,
-`frontend/src/data/profile.js`, `frontend/public/robots.txt`, and
-`frontend/public/sitemap.xml`. Add `frontend/public/og-image.png` at 1200x630,
-and replace `frontend/public/resume.pdf` with a final version that contains no
-phone number.
+The site is deployed at https://portfolio-dhruv-lad.vercel.app on Vercel with
+**Root Directory** set to `frontend`. The social preview image lives at
+`frontend/public/og-image.png`. Replace `frontend/public/resume.pdf` with a
+final version that contains no phone number.
