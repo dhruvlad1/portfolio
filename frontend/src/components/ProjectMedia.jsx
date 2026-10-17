@@ -5,10 +5,16 @@ function ProjectMedia({ media, title }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isFading, setIsFading] = useState(false)
+  const [failedMedia, setFailedMedia] = useState(() => new Set())
   const videoRef = useRef(null)
   const frameRef = useRef(null)
   const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   const activeMedia = media[activeIndex]
+  const activeMediaFailed = activeMedia ? failedMedia.has(activeMedia.src) : false
+  const availableIndices = media.reduce((indices, item, index) => {
+    if (!failedMedia.has(item.src)) indices.push(index)
+    return indices
+  }, [])
   const aspect = activeMedia?.aspect || '16 / 10'
 
   const pauseVideo = useCallback((reset = false) => {
@@ -25,8 +31,21 @@ function ProjectMedia({ media, title }) {
     video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false))
   }, [shouldReduceMotion])
 
+  const markMediaFailed = useCallback((src) => {
+    setFailedMedia((current) => {
+      if (current.has(src)) return current
+      const next = new Set(current)
+      next.add(src)
+      return next
+    })
+    setIsPlaying(false)
+
+    const nextIndex = media.findIndex((item, index) => index !== activeIndex && !failedMedia.has(item.src) && item.src !== src)
+    if (nextIndex !== -1) setActiveIndex(nextIndex)
+  }, [activeIndex, failedMedia, media])
+
   useEffect(() => {
-    if (!activeMedia || activeMedia.type !== 'video') return undefined
+    if (!activeMedia || activeMedia.type !== 'video' || activeMediaFailed) return undefined
     const frame = frameRef.current
     const video = videoRef.current
     if (!frame || !video) return undefined
@@ -59,17 +78,17 @@ function ProjectMedia({ media, title }) {
       observer.disconnect()
       pauseVideo(true)
     }
-  }, [activeIndex, activeMedia, pauseVideo, playVideo, shouldReduceMotion])
+  }, [activeIndex, activeMedia, activeMediaFailed, pauseVideo, playVideo, shouldReduceMotion])
 
   useEffect(() => {
     const frame = frameRef.current
-    if (!frame || !activeMedia || activeMedia.type !== 'video') return undefined
+    if (!frame || !activeMedia || activeMedia.type !== 'video' || activeMediaFailed) return undefined
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) pauseVideo()
     })
     observer.observe(frame)
     return () => observer.disconnect()
-  }, [activeIndex, activeMedia, pauseVideo])
+  }, [activeIndex, activeMedia, activeMediaFailed, pauseVideo])
 
   const changeMedia = (nextIndex) => {
     pauseVideo(true)
@@ -78,12 +97,23 @@ function ProjectMedia({ media, title }) {
     if (!shouldReduceMotion) window.setTimeout(() => setIsFading(false), 150)
   }
 
-  if (!activeMedia) {
+  if (!activeMedia || activeMediaFailed) {
     return (
-      <div className="project-media">
+      <div className={`project-media${isFading ? ' is-fading' : ''}`}>
         <div className="media-frame media-placeholder" style={{ aspectRatio: '16 / 10' }}>
           <span>{title}</span>
         </div>
+        {availableIndices.length > 1 && (
+          <div className="media-switcher">
+            <span>{availableIndices.indexOf(activeIndex) + 1} / {availableIndices.length}</span>
+            <button type="button" aria-label={`Previous ${title} media`} onClick={() => changeMedia(availableIndices[(availableIndices.indexOf(activeIndex) - 1 + availableIndices.length) % availableIndices.length])}>
+              <ChevronLeft aria-hidden="true" size={14} />
+            </button>
+            <button type="button" aria-label={`Next ${title} media`} onClick={() => changeMedia(availableIndices[(availableIndices.indexOf(activeIndex) + 1) % availableIndices.length])}>
+              <ChevronRight aria-hidden="true" size={14} />
+            </button>
+          </div>
+        )}
       </div>
     )
   }
@@ -96,7 +126,7 @@ function ProjectMedia({ media, title }) {
         style={{ aspectRatio: aspect }}
       >
         {activeMedia.type === 'image' ? (
-          <img src={activeMedia.src} alt={activeMedia.alt} loading="lazy" decoding="async" />
+          <img src={activeMedia.src} alt={activeMedia.alt} loading="lazy" decoding="async" onError={() => markMediaFailed(activeMedia.src)} />
         ) : (
           <>
             <video
@@ -107,8 +137,9 @@ function ProjectMedia({ media, title }) {
               preload="metadata"
               poster={activeMedia.poster}
               aria-label={activeMedia.alt}
+              onError={() => markMediaFailed(activeMedia.src)}
             >
-              <source src={activeMedia.src} />
+              <source src={activeMedia.src} onError={() => markMediaFailed(activeMedia.src)} />
             </video>
             <button
               className="media-play-button"
@@ -121,13 +152,13 @@ function ProjectMedia({ media, title }) {
           </>
         )}
       </div>
-      {media.length > 1 && (
+      {availableIndices.length > 1 && (
         <div className="media-switcher">
-          <span>{activeIndex + 1} / {media.length}</span>
-          <button type="button" aria-label={`Previous ${title} media`} onClick={() => changeMedia((activeIndex - 1 + media.length) % media.length)}>
+          <span>{availableIndices.indexOf(activeIndex) + 1} / {availableIndices.length}</span>
+          <button type="button" aria-label={`Previous ${title} media`} onClick={() => changeMedia(availableIndices[(availableIndices.indexOf(activeIndex) - 1 + availableIndices.length) % availableIndices.length])}>
             <ChevronLeft aria-hidden="true" size={14} />
           </button>
-          <button type="button" aria-label={`Next ${title} media`} onClick={() => changeMedia((activeIndex + 1) % media.length)}>
+          <button type="button" aria-label={`Next ${title} media`} onClick={() => changeMedia(availableIndices[(availableIndices.indexOf(activeIndex) + 1) % availableIndices.length])}>
             <ChevronRight aria-hidden="true" size={14} />
           </button>
         </div>

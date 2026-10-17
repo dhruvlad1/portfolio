@@ -15,7 +15,12 @@ export const projects = [
       github: 'https://github.com/dhruvlad1/FinSight',
       live: '',
     },
-    media: [],
+    media: [{
+      type: 'video',
+      src: '/projects/finsight/demo.mp4',
+      poster: '/projects/finsight/demo-poster.jpg',
+      alt: 'FinSight answering a question about an earnings call, with cited sources',
+    }],
   },
   {
     id: 'voyexa',
@@ -31,9 +36,14 @@ export const projects = [
     tech: ['React', 'Tailwind CSS', 'Spring Boot', 'PostgreSQL', 'Docker'],
     links: {
       github: 'https://github.com/dhruvlad1/Voyexa',
-      live: '',
+      live: 'https://voyexa.vercel.app/',
     },
-    media: [],
+    media: [{
+      type: 'video',
+      src: '/projects/voyexa/demo.mp4',
+      poster: '/projects/voyexa/demo-poster.jpg',
+      alt: 'Voyexa generating and editing a travel itinerary',
+    }],
   },
   {
     id: 'gestureflow',
@@ -51,7 +61,12 @@ export const projects = [
       github: 'https://github.com/dhruvlad1/GestureFlow',
       live: '',
     },
-    media: [],
+    media: [{
+      type: 'video',
+      src: '/projects/gestureflow/demo.mp4',
+      poster: '/projects/gestureflow/demo-poster.jpg',
+      alt: 'GestureFlow controlling the Windows cursor with hand gestures',
+    }],
   },
   {
     id: 'visual-semantic-encoder',
@@ -69,7 +84,11 @@ export const projects = [
       github: 'https://github.com/dhruvlad1/Visual-Semantic-Encoder',
       live: '',
     },
-    media: [],
+    media: [{
+      type: 'image',
+      src: '/projects/visual-semantic-encoder/screenshot-1.png',
+      alt: 'Visual Semantic Encoder generating a caption with an attention heatmap',
+    }],
   },
 ]
 
