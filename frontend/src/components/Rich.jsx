@@ -3,43 +3,40 @@ function stripMarkers(text) {
   return text.replace(/\[\[|\]\]|\{\{|\}\}/g, '')
 }
 
-function Rich({ text }) {
-  const parts = []
+function parseRich(text) {
+  const tokens = []
   const markerPattern = /(\[\[|\{\{)/
   let remaining = text
-  let key = 0
 
   while (remaining) {
     const match = remaining.match(markerPattern)
     if (!match) {
-      parts.push(remaining)
+      tokens.push({ text: remaining, type: 'plain' })
       break
     }
-
-    if (match.index > 0) {
-      parts.push(remaining.slice(0, match.index))
-    }
-
+    if (match.index > 0) tokens.push({ text: remaining.slice(0, match.index), type: 'plain' })
     const opener = match[0]
     const closer = opener === '[[' ? ']]' : '}}'
     const contentStart = match.index + opener.length
     const contentEnd = remaining.indexOf(closer, contentStart)
     if (contentEnd === -1) {
-      parts.push(remaining.slice(match.index))
+      tokens.push({ text: remaining.slice(match.index), type: 'plain' })
       break
     }
-
-    parts.push(
-      <span className={opener === '[[' ? 'hl' : 'hl hl-warm'} key={key}>
-        {remaining.slice(contentStart, contentEnd)}
-      </span>,
-    )
-    key += 1
+    tokens.push({
+      text: remaining.slice(contentStart, contentEnd),
+      type: opener === '[[' ? 'hl' : 'warm',
+    })
     remaining = remaining.slice(contentEnd + closer.length)
   }
-
-  return <>{parts}</>
+  return tokens
 }
 
-export { stripMarkers }
+function Rich({ text }) {
+  return <>{parseRich(text).map((token, index) => token.type === 'plain'
+    ? token.text
+    : <span className={token.type === 'hl' ? 'hl' : 'hl hl-warm'} key={`${token.type}-${index}`}>{token.text}</span>)}</>
+}
+
+export { parseRich, stripMarkers }
 export default Rich

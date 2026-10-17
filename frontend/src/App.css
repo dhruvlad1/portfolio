@@ -977,6 +977,21 @@ a .hl-warm {
   line-height: 1;
 }
 
+.count-up {
+  position: relative;
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+.count-up-size {
+  visibility: hidden;
+}
+
+.count-up-value {
+  position: absolute;
+  inset: 0;
+}
+
 .about-stats li > span {
   max-width: 28ch;
   color: var(--muted);

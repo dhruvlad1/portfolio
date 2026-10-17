@@ -3,6 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 const GLYPHS = '!<>-_\\/[]{}=+*^?#'
 const STATIC_CHARS = new Set([' ', '·', '–', '.'])
 
+function scramble(text) {
+  return [...text].map((character) => (
+    STATIC_CHARS.has(character) ? character : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+  )).join('')
+}
+
 function DecryptText({
   text,
   as: Element = 'span',
@@ -11,12 +17,13 @@ function DecryptText({
   className = '',
 }) {
   const [reducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  const [displayText, setDisplayText] = useState(text)
-  const [revealedCount, setRevealedCount] = useState(text.length)
+  const canAnimate = !reducedMotion && (trigger === 'mount' || trigger === 'view')
+  const [displayText, setDisplayText] = useState(() => canAnimate ? scramble(text) : text)
+  const [revealedCount, setRevealedCount] = useState(() => canAnimate ? 0 : text.length)
   const wrapperRef = useRef(null)
   const runningRef = useRef(false)
   const hasRunRef = useRef(false)
-  const frameRef = useRef(null)
+  const rafRef = useRef(null)
   const timeoutRef = useRef(null)
 
   useEffect(() => {
@@ -27,7 +34,7 @@ function DecryptText({
     const finish = () => {
       runningRef.current = false
       hasRunRef.current = true
-      frameRef.current = null
+      rafRef.current = null
       setDisplayText(text)
     }
 
@@ -35,9 +42,16 @@ function DecryptText({
       if (runningRef.current || (!canRepeat && hasRunRef.current)) return
       runningRef.current = true
       setRevealedCount(0)
+      setDisplayText(scramble(text))
       const startedAt = performance.now()
+      let lastTick = startedAt
 
       const tick = (now) => {
+        if (now - lastTick < 30) {
+          rafRef.current = requestAnimationFrame(tick)
+          return
+        }
+        lastTick = now
         const progress = Math.min((now - startedAt) / runDuration, 1)
         const revealed = Math.floor(progress * text.length)
         setRevealedCount(revealed)
@@ -50,12 +64,10 @@ function DecryptText({
           finish()
           return
         }
-        frameRef.current = window.setTimeout(() => {
-          frameRef.current = requestAnimationFrame(tick)
-        }, 30)
+        rafRef.current = requestAnimationFrame(tick)
       }
 
-      frameRef.current = requestAnimationFrame(tick)
+      rafRef.current = requestAnimationFrame(tick)
     }
 
     const element = wrapperRef.current
@@ -82,17 +94,19 @@ function DecryptText({
     }
     if (trigger === 'hover') {
       element.addEventListener('mouseenter', handlePointerEnter)
-      element.addEventListener('focus', handleFocus)
+      element.addEventListener('focusin', handleFocus)
     }
 
     return () => {
       window.clearTimeout(timeoutRef.current)
-      window.clearTimeout(frameRef.current)
-      window.cancelAnimationFrame(frameRef.current)
+      timeoutRef.current = null
+      window.cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+      runningRef.current = false
       if (observer) observer.disconnect()
       if (trigger === 'hover') {
         element.removeEventListener('mouseenter', handlePointerEnter)
-        element.removeEventListener('focus', handleFocus)
+        element.removeEventListener('focusin', handleFocus)
       }
     }
   }, [duration, reducedMotion, text, trigger])
