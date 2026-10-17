@@ -1,6 +1,7 @@
 import profile from '../data/profile'
 import { ArrowUpRight } from 'lucide-react'
 import Rich from './Rich'
+import { GitHubIcon, LinkedInIcon } from './icons'
 
 function Hero() {
   return (
@@ -19,10 +20,10 @@ function Hero() {
           <span className="social-label">find me on</span>
           <div className="social-links">
             <a href={profile.github} target="_blank" rel="noreferrer">
-              GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <GitHubIcon />GitHub
             </a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <LinkedInIcon />LinkedIn
             </a>
           </div>
         </div>

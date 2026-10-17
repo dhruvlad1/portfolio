@@ -1,8 +1,8 @@
-import { ArrowUpRight } from 'lucide-react'
 import projects from '../data/projects'
 import ProjectMedia from './ProjectMedia'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
+import { GitHubIcon, LiveIcon } from './icons'
 
 function Projects() {
   return (
@@ -35,11 +35,11 @@ function Projects() {
                   </div>
                   <div className="project-links">
                     <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">
-                      GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+                      <GitHubIcon />GitHub
                     </a>
                     {project.links.live && (
                       <a className="text-link" href={project.links.live} target="_blank" rel="noreferrer">
-                        live <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+                        <LiveIcon />live
                       </a>
                     )}
                   </div>

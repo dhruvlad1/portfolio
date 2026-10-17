@@ -1,9 +1,9 @@
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
 import timeline from '../data/timeline'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
+import { BadgeIcon } from './icons'
 
 function sortByStart(items) {
   return items
@@ -67,8 +67,8 @@ function TimelineEntry({ item, delay, child = false }) {
               rel="noreferrer noopener"
               aria-label={`${item.link.label} for ${item.title} (opens in a new tab)`}
             >
+              <BadgeIcon />
               {item.link.label}
-              <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
           )}
         </div>

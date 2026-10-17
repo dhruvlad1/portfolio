@@ -97,11 +97,16 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   color: var(--muted);
   font-size: var(--font-size-xs);
   font-weight: 500;
   transition: color var(--transition-fast);
+}
+
+.text-link,
+.social-links a {
+  min-height: 32px;
 }
 
 .nav-link:hover,
@@ -164,6 +169,9 @@
 }
 
 .resume-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: var(--space-2) var(--space-3);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-button);
@@ -209,6 +217,13 @@
   border: 0;
   font-family: var(--mono);
   font-size: var(--font-size-xs);
+}
+
+.link-icon {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
 }
 
 .mobile-toggle {
@@ -328,7 +343,7 @@
 .social-links a {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: var(--text);
   font-size: var(--font-size-xs);
   transition: color var(--transition-fast);
@@ -691,7 +706,7 @@
   display: inline-flex;
   min-height: 32px;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin-top: 12px;
   color: var(--muted);
   font-family: var(--mono);
@@ -984,7 +999,7 @@ footer {
 .contact-email {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   color: var(--text);
   font-family: var(--heading);
   font-size: clamp(1.25rem, 2.5vw, 2rem);
@@ -1021,6 +1036,12 @@ footer {
 
 .contact-links {
   margin-top: 28px;
+}
+
+.contact-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .sr-only {

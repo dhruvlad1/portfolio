@@ -1,9 +1,10 @@
-import { ArrowUpRight, Check, Copy, Mail } from 'lucide-react'
+import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 import profile from '../data/profile'
 import Reveal from './Reveal'
 import CursorToggle from './CursorToggle'
 import Rich from './Rich'
+import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon } from './icons'
 
 function Footer() {
   const [copied, setCopied] = useState(false)
@@ -30,9 +31,8 @@ function Footer() {
           </p>
           <div className="contact-email-row">
             <a className="contact-email" href={`mailto:${profile.email}`}>
-              <Mail aria-hidden="true" size={16} strokeWidth={1.75} />
+              <MailIcon size="0.8em" />
               {profile.email}
-              <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
             <button
               className="copy-email"
@@ -48,13 +48,13 @@ function Footer() {
           </div>
           <div className="contact-links">
             <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-              GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <GitHubIcon />GitHub
             </a>
             <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-              LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <LinkedInIcon />LinkedIn
             </a>
             <a className="text-link" href={profile.resumeUrl}>
-              resume <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <ResumeIcon />resume
             </a>
           </div>
         </Reveal>
@@ -63,10 +63,10 @@ function Footer() {
         <span className="footer-name">{profile.name.toUpperCase()}.</span>
         <div className="footer-links">
           <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+            <GitHubIcon />GitHub
           </a>
           <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+            <LinkedInIcon />LinkedIn
           </a>
           <CursorToggle />
         </div>
