@@ -56,7 +56,7 @@ function TimelineEntry({ item, delay, child = false }) {
           )}
           {item.badges && (
             <div className="timeline-badges" aria-label="Highlights">
-              {item.badges.map((badge) => <span key={badge}>{badge}</span>)}
+              {item.badges.map((badge) => <span key={stripMarkers(badge)}><Rich text={badge} /></span>)}
             </div>
           )}
           {item.link && (

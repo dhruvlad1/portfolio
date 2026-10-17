@@ -27,7 +27,7 @@ function Footer() {
           <span className="eyebrow">contact</span>
           <h2><Rich text="say [[hi]]." /></h2>
           <p className="contact-description">
-            open to internships and interesting projects. email is the fastest way to reach me.
+            <Rich text="open to [[internships]] and interesting projects. email is the fastest way to reach me." />
           </p>
           <div className="contact-email-row">
             <a className="contact-email" href={`mailto:${profile.email}`}>

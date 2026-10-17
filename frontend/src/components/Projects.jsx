@@ -24,7 +24,7 @@ function Projects() {
                   <span className="project-number">{project.number} · {project.year}</span>
                   <h3 className="project-title">{project.title}</h3>
                   <p className="project-tagline"><Rich text={project.tagline} /></p>
-                  <p className="project-description">{project.description}</p>
+                  <p className="project-description"><Rich text={project.description} /></p>
                   <ul className="project-highlights">
                     {project.highlights.map((highlight) => (
                       <li key={stripMarkers(highlight)}><Rich text={highlight} /></li>

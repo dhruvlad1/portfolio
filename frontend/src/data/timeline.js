@@ -8,7 +8,7 @@ const timeline = [
     title: 'SSC, 10th boards',
     org: 'SVIS',
     location: 'Kandivali West, Mumbai',
-    badges: ['SSC 94.2%'],
+    badges: ['SSC {{94.2%}}'],
   },
   {
     id: 'tp-bhatia',
@@ -19,7 +19,7 @@ const timeline = [
     org: 'Shri T.P. Bhatia College of Science',
     location: 'Kandivali West, Mumbai',
     summary: 'science stream, with entrance exams alongside boards.',
-    badges: ['HSC 88.67%'],
+    badges: ['HSC {{88.67%}}'],
     branchLabel: 'entrance exams',
     children: [
       {
@@ -50,8 +50,8 @@ const timeline = [
     title: 'B.Tech, Computer Engineering',
     org: 'Veermata Jijabai Technological Institute (VJTI)',
     location: 'Matunga, Mumbai',
-    summary: 'minor in cybersecurity. coursework: DSA, OS, DBMS, OOP, discrete maths.',
-    badges: ['CGPA 7.89'],
+    summary: 'minor in [[cybersecurity]]. coursework: DSA, OS, DBMS, OOP, discrete maths.',
+    badges: ['CGPA {{7.89}}'],
     current: true,
     branchLabel: 'things i did at VJTI',
     children: [
@@ -72,8 +72,8 @@ const timeline = [
         type: 'experience',
         title: 'open source contributor',
         org: 'Hacktoberfest 2025',
-        summary: 'merged pull requests across a mix of open-source repositories.',
-        badges: ['6+ merged PRs', 'Supercontributor badge'],
+        summary: 'merged pull requests across a mix of [[open-source]] repositories.',
+        badges: ['{{6+}} merged PRs', '[[Supercontributor]] badge'],
         link: {
           label: 'view badge',
           href: 'https://www.holopin.io/@dhruvlad1#badges',

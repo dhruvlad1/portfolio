@@ -1,6 +1,6 @@
 const about = {
   statement: 'i like understanding how things work, then [[building them]].',
-  body: 'third-year computer engineering student at VJTI, with a minor in cybersecurity. most of my projects sit between [[machine learning]] and [[backend engineering]]: a retrieval pipeline over earnings calls, an image captioning model trained from scratch, a full-stack travel planner. i also solve algorithm problems, contributed to open source during Hacktoberfest, and helped coordinate events for the college tech fest.',
+  body: 'third-year computer engineering student at VJTI, with a minor in [[cybersecurity]]. most of my projects sit between [[machine learning]] and [[backend engineering]]: a retrieval pipeline over earnings calls, an image captioning model trained from scratch, a full-stack travel planner. i also solve algorithm problems, contributed to open source during [[Hacktoberfest]], and helped coordinate events for the college tech fest.',
   facts: [
     { label: 'based in', value: 'Mumbai, India' },
     { label: 'studying', value: 'B.Tech Computer Engineering, VJTI' },
