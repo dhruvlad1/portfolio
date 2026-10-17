@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import profile from '../data/profile'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -10,7 +11,9 @@ function Navbar() {
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="navbar">
         <div className="container navbar-inner">
-          <a className="wordmark" href="#top" aria-label="Dhruv home">DHRUV.</a>
+          <a className="wordmark" href="#top" aria-label={`${profile.name} home`}>
+            {profile.name.toUpperCase()}.
+          </a>
           <button
             className="mobile-toggle"
             type="button"
@@ -29,10 +32,13 @@ function Navbar() {
             <a className="nav-link" href="#work" onClick={closeMenu}>Work</a>
             <a className="nav-link" href="#about" onClick={closeMenu}>About</a>
             <a className="nav-link" href="#contact" onClick={closeMenu}>Contact</a>
+            <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>
+              Resume ↗
+            </a>
           </nav>
           <div className="nav-meta">
             <span className="status">Open to opportunities</span>
-            <a className="resume-link" href="#contact">Resume ↗</a>
+            <a className="resume-link" href={profile.resumeUrl}>Resume ↗</a>
           </div>
         </div>
       </header>

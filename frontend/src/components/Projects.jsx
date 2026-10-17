@@ -1,26 +1,4 @@
-const projects = [
-  {
-    number: '01',
-    title: 'Voyexa AI',
-    description: 'A project in progress. Details and case study to be added as the work takes shape.',
-    technologies: ['AI', 'Product'],
-    preview: 'VOYEXA',
-  },
-  {
-    number: '02',
-    title: 'GestureFlow',
-    description: 'A project in progress. Details and case study to be added as the work takes shape.',
-    technologies: ['Interaction', 'Systems'],
-    preview: 'GESTURE',
-  },
-  {
-    number: '03',
-    title: 'SmartCV',
-    description: 'A project in progress. Details and case study to be added as the work takes shape.',
-    technologies: ['AI', 'Web'],
-    preview: 'SMARTCV',
-  },
-]
+import projects from '../data/projects'
 
 function Projects() {
   return (
@@ -31,24 +9,28 @@ function Projects() {
             <span className="eyebrow">Selected work</span>
             <h2 className="section-title" id="projects-title">Things I&apos;m<br />working on.</h2>
           </div>
-          <span className="section-index">/ 03</span>
+          <span className="section-index">/ {String(projects.length).padStart(2, '0')}</span>
         </div>
         <div className="project-grid">
-          {projects.map((project) => (
-            <article className="project-card" key={project.title}>
+          {projects.map((project, index) => (
+            <article
+              className={`project-card${index % 2 === 1 ? ' project-card--even' : ''}`}
+              key={project.id}
+            >
               <span className="project-number">{project.number}</span>
               <div className="project-preview" aria-label={`${project.title} preview placeholder`}>
-                <span className="preview-word">{project.preview}</span>
+                <span className="preview-word">{project.title}</span>
               </div>
+              <p className="project-tagline">{project.tagline}</p>
               <h3 className="project-title">{project.title}</h3>
               <p className="project-description">{project.description}</p>
               <div className="project-meta">
                 <div className="tech-list" aria-label="Technologies">
-                  {project.technologies.map((technology) => <span key={technology}>{technology}</span>)}
+                  {project.tech.map((technology) => <span key={technology}>{technology}</span>)}
                 </div>
                 <div className="project-links">
-                  <a className="text-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a>
-                  <a className="text-link" href="#contact">Live demo ↗</a>
+                  <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+                  <a className="text-link" href={project.links.live}>Live demo ↗</a>
                 </div>
               </div>
             </article>

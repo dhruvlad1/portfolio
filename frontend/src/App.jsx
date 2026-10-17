@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="site-shell">
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <Marquee />
         <Projects />
