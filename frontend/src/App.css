@@ -571,6 +571,10 @@
   border-top: 0;
 }
 
+.timeline-list > ol > .timeline-item:last-child {
+  padding-bottom: 40px;
+}
+
 .timeline-period {
   color: var(--muted);
   font-family: var(--mono);

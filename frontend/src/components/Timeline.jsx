@@ -5,6 +5,22 @@ import timeline from '../data/timeline'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
 
+function sortByStart(items) {
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      if (a.item.start && b.item.start) return a.item.start.localeCompare(b.item.start)
+      if (a.item.start) return -1
+      if (b.item.start) return 1
+      return a.index - b.index
+    })
+    .map(({ item }) => item)
+}
+
+const sortedTimeline = sortByStart(timeline).map((item) => (
+  item.children ? { ...item, children: sortByStart(item.children) } : item
+))
+
 function TimelineEntry({ item, delay, child = false }) {
   const dotRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
@@ -82,7 +98,7 @@ function TimelineBranch({ item }) {
         aria-hidden="true"
         style={{ scaleY: shouldReduceMotion ? 1 : branchLineScale }}
       />
-      <ol aria-label="experiences at VJTI">
+      <ol aria-label="experiences at VJTI, oldest first">
         {item.children.map((child, index) => (
           <li key={child.id}>
             <TimelineEntry item={child} child delay={Math.min(index, 3) * 0.06} />
@@ -118,8 +134,8 @@ function Timeline() {
             aria-hidden="true"
             style={{ scaleY: shouldReduceMotion ? 1 : lineScale }}
           />
-          <ol>
-            {timeline.map((item, index) => (
+          <ol aria-label="education and experience, oldest first">
+            {sortedTimeline.map((item, index) => (
               <li className="timeline-item" key={item.id}>
                 <TimelineEntry item={item} delay={Math.min(index, 4) * 0.05} />
                 {item.children && <TimelineBranch item={item} />}
