@@ -8,8 +8,8 @@ const about = {
     { label: 'interested in', value: 'applied ML, backend systems' },
   ],
   stats: [
-    { value: '700+', label: 'problems solved (LeetCode, CodeChef, Codeforces)' },
-    { value: '1981', label: 'LeetCode max rating · Knight' },
+    { value: '{{700+}}', label: 'problems solved (LeetCode, CodeChef, Codeforces)' },
+    { value: '{{1981}}', label: 'LeetCode max rating · Knight' },
   ],
   skills: [
     { label: 'languages', items: ['C++', 'Python', 'Java', 'JavaScript', 'SQL', 'HTML/CSS'] },

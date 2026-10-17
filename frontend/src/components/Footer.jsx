@@ -40,7 +40,7 @@ function Footer() {
               aria-label="copy email address"
               onClick={copyEmail}
             >
-              {copied ? <Check aria-hidden="true" size={14} strokeWidth={1.75} /> : <Copy aria-hidden="true" size={14} strokeWidth={1.75} />}
+              {copied ? <Check className="copy-icon--warm" aria-hidden="true" size={14} strokeWidth={1.75} /> : <Copy aria-hidden="true" size={14} strokeWidth={1.75} />}
               <span className="sr-only">{copied ? 'email copied' : 'copy email address'}</span>
               <span aria-hidden="true">copy</span>
             </button>

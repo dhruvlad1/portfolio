@@ -223,7 +223,20 @@
   flex: none;
   width: 1em;
   height: 1em;
+  color: var(--accent);
   vertical-align: middle;
+}
+
+.link-icon--warm {
+  color: var(--accent-2);
+}
+
+.link-icon--brand {
+  fill: currentColor;
+}
+
+.copy-icon--warm {
+  color: var(--accent-2);
 }
 
 .mobile-toggle {
@@ -545,13 +558,21 @@
   gap: 7px;
 }
 
-.tech-list span {
+.tech-list > span {
   padding: 6px 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
+}
+
+.tech-list .hl {
+  color: var(--accent);
+}
+
+.tech-list .hl-warm {
+  color: var(--accent-2);
 }
 
 .project-links {
@@ -693,13 +714,21 @@
   margin-top: 18px;
 }
 
-.timeline-badges span {
+.timeline-badges > span {
   padding: 6px 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
+}
+
+.timeline-badges .hl {
+  color: var(--accent);
+}
+
+.timeline-badges .hl-warm {
+  color: var(--accent-2);
 }
 
 .timeline-proof-link {
@@ -924,7 +953,7 @@ a .hl-warm {
   line-height: 1;
 }
 
-.about-stats span {
+.about-stats li > span {
   max-width: 28ch;
   color: var(--muted);
   font-family: var(--mono);

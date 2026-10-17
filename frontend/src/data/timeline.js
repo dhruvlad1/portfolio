@@ -38,7 +38,7 @@ const timeline = [
         type: 'entrance exam',
         title: 'MHT-CET',
         org: 'State CET Cell, Maharashtra',
-        summary: 'scored {{99.97 percentile}} (rank 90), with {{100 percentile}} in maths.',
+        summary: 'scored {{99.97 percentile}} ({{rank 90}}), with {{100 percentile}} in maths.',
       },
     ],
   },

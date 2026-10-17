@@ -30,7 +30,7 @@ function About() {
               <ul>
                 {about.stats.map((stat) => (
                   <li key={stat.label}>
-                    <strong>{stat.value}</strong>
+                    <strong><Rich text={stat.value} /></strong>
                     <span>{stat.label}</span>
                   </li>
                 ))}
