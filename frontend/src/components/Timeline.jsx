@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
 import timeline from '../data/timeline'
 import Reveal from './Reveal'
+import Rich, { stripMarkers } from './Rich'
 
 function TimelineEntry({ item, delay, child = false }) {
   const dotRef = useRef(null)
@@ -17,7 +18,7 @@ function TimelineEntry({ item, delay, child = false }) {
     <Reveal className={child ? 'timeline-child-reveal' : 'timeline-item-inner'} delay={delay}>
       <div className={child ? 'timeline-child-inner' : 'timeline-item-inner-grid'}>
         <div className="timeline-period">
-          <span>{item.period}</span>
+          <span><Rich text={item.period} /></span>
           <small>{item.type}</small>
         </div>
         <div className={child ? 'timeline-content timeline-child-content' : 'timeline-content'}>
@@ -34,7 +35,9 @@ function TimelineEntry({ item, delay, child = false }) {
             {item.org}
             {item.location && <span> · {item.location}</span>}
           </p>
-          {item.summary && <p className="timeline-summary">{item.summary}</p>}
+          {item.summary && stripMarkers(item.summary).length > 0 && (
+            <p className="timeline-summary"><Rich text={item.summary} /></p>
+          )}
           {item.badges && (
             <div className="timeline-badges" aria-label="Highlights">
               {item.badges.map((badge) => <span key={badge}>{badge}</span>)}

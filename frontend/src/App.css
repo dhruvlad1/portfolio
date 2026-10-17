@@ -217,7 +217,7 @@
 }
 
 .hero h1 em {
-  color: var(--text);
+  color: var(--accent);
   font-family: var(--serif);
   font-size: 1.08em;
   font-style: italic;
@@ -673,6 +673,26 @@
   text-decoration-color: var(--accent);
 }
 
+.hl {
+  color: var(--accent);
+}
+
+.hl-warm {
+  color: var(--accent-2);
+}
+
+.text-link .hl,
+.timeline-proof-link .hl,
+.text-link .hl-warm,
+.timeline-proof-link .hl-warm {
+  color: inherit;
+}
+
+a .hl,
+a .hl-warm {
+  color: inherit;
+}
+
 .timeline-branch {
   position: relative;
   padding: 0 0 40px;
@@ -846,7 +866,7 @@
 }
 
 .about-stats strong {
-  color: var(--text);
+  color: var(--accent-2);
   font-family: var(--heading);
   font-size: 40px;
   font-weight: 500;

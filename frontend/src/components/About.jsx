@@ -1,5 +1,6 @@
 import about from '../data/about'
 import Reveal from './Reveal'
+import Rich from './Rich'
 
 function About() {
   return (
@@ -12,8 +13,8 @@ function About() {
           </Reveal>
           <div className="about-details">
             <Reveal delay={0}>
-              <p className="about-statement">{about.statement}</p>
-              <p className="about-body">{about.body}</p>
+              <p className="about-statement"><Rich text={about.statement} /></p>
+              <p className="about-body"><Rich text={about.body} /></p>
             </Reveal>
             <Reveal className="about-facts" delay={0.05}>
               <dl>

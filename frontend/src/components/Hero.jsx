@@ -1,5 +1,6 @@
 import profile from '../data/profile'
 import { ArrowUpRight } from 'lucide-react'
+import Rich from './Rich'
 
 function Hero() {
   return (
@@ -8,8 +9,7 @@ function Hero() {
         <span className="eyebrow">Dhruv · Mumbai</span>
         <h1 id="hero-title">i build software, mostly the <em>AI</em> kind.</h1>
         <p className="hero-description">
-          computer engineering student at VJTI. i like making things that work, and then
-          making them work better.
+          <Rich text="computer engineering student at [[VJTI]]. i like making things that work, and then making them work better." />
         </p>
         <div className="hero-actions">
           <a className="button" href="#work">explore my work <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} /></a>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import profile from '../data/profile'
 import Reveal from './Reveal'
 import CursorToggle from './CursorToggle'
+import Rich from './Rich'
 
 function Footer() {
   const [copied, setCopied] = useState(false)
@@ -23,7 +24,7 @@ function Footer() {
       <div className="container contact">
         <Reveal>
           <span className="eyebrow">contact</span>
-          <h2>say hi.</h2>
+          <h2><Rich text="say [[hi]]." /></h2>
           <p className="contact-description">
             open to internships and interesting projects. email is the fastest way to reach me.
           </p>

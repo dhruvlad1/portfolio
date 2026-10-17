@@ -5,7 +5,9 @@
   --surface-raised: #161618;
   --text: #e9e7e2;
   --muted: #8f8d88;
+  /* --accent = ideas/keywords, --accent-2 = numbers/results. */
   --accent: #a9b8ff;
+  --accent-2: #f2b58a;
   --border: rgba(233, 231, 226, 0.08);
   --border-strong: rgba(233, 231, 226, 0.18);
   --heading: 'Space Grotesk', Arial, sans-serif;

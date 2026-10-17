@@ -1,7 +1,7 @@
 const timeline = [
   {
     id: 'vjti',
-    period: 'Aug 2024 – Present',
+    period: 'Aug 2024 – [[Present]]',
     type: 'education',
     title: 'B.Tech, Computer Engineering',
     org: 'Veermata Jijabai Technological Institute (VJTI)',
