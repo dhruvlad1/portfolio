@@ -32,18 +32,14 @@ function TargetCursor({
     const spinner = spinnerRef.current
     const corners = cornersRef.current
     let activeTarget = null
+    let lastTarget = null
     let spinTl = null
     let spinDelay = null
-    let inside = false
+    const snap = { value: 0 }
 
-    const setIdlePositions = (duration = 0.25) => {
+    const setIdlePositions = () => {
       corners.forEach((corner, index) => {
-        gsap.to(corner, {
-          ...idlePositions[index],
-          duration,
-          ease: 'power2.out',
-          overwrite: true,
-        })
+        gsap.set(corner, idlePositions[index])
       })
     }
 
@@ -68,21 +64,36 @@ function TargetCursor({
       ]
     }
 
+    const getInterpolatedPositions = (target) => {
+      const targetPositions = getTargetPositions(target)
+      return targetPositions.map((position, index) => ({
+        x: idlePositions[index].x + (position.x - idlePositions[index].x) * snap.value,
+        y: idlePositions[index].y + (position.y - idlePositions[index].y) * snap.value,
+      }))
+    }
+
+    const finishRelease = () => {
+      if (activeTarget) return
+      lastTarget = null
+      snap.value = 0
+      setIdlePositions()
+      startSpinning()
+    }
+
     const releaseTarget = () => {
       if (!activeTarget) return
+      lastTarget = activeTarget
       activeTarget = null
       wrapper.classList.remove('is-locked')
-      corners.forEach((corner, index) => {
-        gsap.to(corner, {
-          ...idlePositions[index],
-          duration: 0.25,
-          ease: 'power2.out',
-          overwrite: true,
-        })
-      })
       spinTl?.kill()
       spinDelay?.kill()
-      spinDelay = gsap.delayedCall(0.25, startSpinning)
+      gsap.to(snap, {
+        value: 0,
+        duration: 0.25,
+        ease: 'power2.out',
+        overwrite: 'auto',
+        onComplete: finishRelease,
+      })
     }
 
     const lockTarget = (target) => {
@@ -91,21 +102,18 @@ function TargetCursor({
       spinDelay?.kill()
       gsap.killTweensOf(spinner)
       activeTarget = target
+      lastTarget = target
       gsap.set(spinner, { rotation: 0 })
       wrapper.classList.add('is-locked')
-      const positions = getTargetPositions(target)
-      corners.forEach((corner, index) => {
-        gsap.to(corner, {
-          ...positions[index],
-          duration: 0.25,
-          ease: 'power2.out',
-          overwrite: true,
-        })
+      gsap.to(snap, {
+        value: 1,
+        duration: 0.25,
+        ease: 'power2.out',
+        overwrite: 'auto',
       })
     }
 
     const move = (event) => {
-      inside = true
       wrapper.classList.add('is-visible')
       gsap.to(wrapper, { x: event.clientX, y: event.clientY, duration: 0.1, ease: 'power3.out', overwrite: true })
     }
@@ -122,46 +130,62 @@ function TargetCursor({
     }
 
     const hide = () => {
-      inside = false
       wrapper.classList.remove('is-visible')
     }
 
-    const show = () => {
-      if (inside) wrapper.classList.add('is-visible')
+    const show = (event) => {
+      wrapper.classList.add('is-visible')
+      if (event) {
+        gsap.to(wrapper, {
+          x: event.clientX,
+          y: event.clientY,
+          duration: 0.1,
+          ease: 'power3.out',
+          overwrite: 'auto',
+        })
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) hide()
     }
 
     const press = () => {
-      gsap.to(dot, { scale: 0.7, duration: 0.15, overwrite: true })
-      gsap.to(spinner, { scale: 0.92, duration: 0.15, overwrite: true })
+      gsap.to(dot, { scale: 0.7, duration: 0.15, overwrite: 'auto' })
+      if (!activeTarget) {
+        gsap.to(spinner, { scale: 0.92, duration: 0.15, overwrite: 'auto' })
+      }
     }
 
     const releasePress = () => {
-      gsap.to(dot, { scale: 1, duration: 0.15, overwrite: true })
-      gsap.to(spinner, { scale: 1, duration: 0.15, overwrite: true })
+      gsap.to(dot, { scale: 1, duration: 0.15, overwrite: 'auto' })
+      gsap.to(spinner, { scale: 1, duration: 0.15, overwrite: 'auto' })
     }
 
     const handleTicker = () => {
-      if (!activeTarget) return
-      const rect = activeTarget.getBoundingClientRect()
-      if (!activeTarget.isConnected || rect.width === 0 || rect.height === 0) {
-        releaseTarget()
+      if (!lastTarget || snap.value <= 0) return
+      const rect = lastTarget.getBoundingClientRect()
+      if (!lastTarget.isConnected || rect.width === 0 || rect.height === 0) {
+        if (activeTarget) releaseTarget()
+        else finishRelease()
         return
       }
-      const positions = getTargetPositions(activeTarget)
+      const positions = getInterpolatedPositions(lastTarget)
       corners.forEach((corner, index) => gsap.set(corner, positions[index]))
     }
 
     if (hideDefaultCursor) document.documentElement.classList.add('has-target-cursor')
     gsap.set(wrapper, { x: 0, y: 0 })
     gsap.set(spinner, { rotation: 0 })
-    setIdlePositions(0)
+    setIdlePositions()
     startSpinning()
     window.addEventListener('pointermove', move, { passive: true })
     window.addEventListener('mouseover', mouseOver)
     window.addEventListener('mouseout', mouseOut)
-    window.addEventListener('pointerleave', hide)
-    window.addEventListener('pointerenter', show)
+    document.documentElement.addEventListener('mouseleave', hide)
+    document.documentElement.addEventListener('mouseenter', show)
     window.addEventListener('blur', hide)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
     window.addEventListener('pointerdown', press)
     window.addEventListener('pointerup', releasePress)
     gsap.ticker.add(handleTicker)
@@ -171,9 +195,10 @@ function TargetCursor({
       window.removeEventListener('pointermove', move)
       window.removeEventListener('mouseover', mouseOver)
       window.removeEventListener('mouseout', mouseOut)
-      window.removeEventListener('pointerleave', hide)
-      window.removeEventListener('pointerenter', show)
+      document.documentElement.removeEventListener('mouseleave', hide)
+      document.documentElement.removeEventListener('mouseenter', show)
       window.removeEventListener('blur', hide)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', releasePress)
       gsap.ticker.remove(handleTicker)

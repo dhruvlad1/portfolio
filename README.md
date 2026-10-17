@@ -1,16 +1,35 @@
-# React + Vite
+# Dhruv's Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite portfolio foundation for Dhruv, built with plain CSS and modular React components.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## React Compiler
+## Adding project media
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Add project media under `frontend/public/projects/<id>/`, then reference it in
+the project data with a public path such as `/projects/<id>/file.mp4`.
 
-## Expanding the ESLint configuration
+Recommended video format: MP4 H.264, maximum 1280px wide, no audio, and under
+approximately 6 MB. Add a `.jpg` or `.webp` poster alongside each video.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deploying
+
+Deploy with Vercel:
+
+1. Import the repository.
+2. Set **Root Directory** to `frontend`.
+3. Select **Vite** as the framework.
+4. Use `npm run build` as the build command.
+5. Use `dist` as the output directory.
+
+Before deploying, replace `REPLACE-ME` in `frontend/index.html`,
+`frontend/src/data/profile.js`, `frontend/public/robots.txt`, and
+`frontend/public/sitemap.xml`. Add `frontend/public/og-image.png` at 1200x630,
+and replace `frontend/public/resume.pdf` with a final version that contains no
+phone number.
