@@ -1,0 +1,36 @@
+{
+  "asOf": "2026-10-17",
+  "totals": {
+    "solved": 765,
+    "approx": false
+  },
+  "platforms": {
+    "leetcode": {
+      "username": "dhruvcodes16",
+      "url": "https://leetcode.com/u/dhruvcodes16/",
+      "rating": null,
+      "maxRating": 1981,
+      "badge": "Knight",
+      "solved": 596,
+      "source": "live"
+    },
+    "codechef": {
+      "username": "dhruvcodes16",
+      "url": "https://www.codechef.com/users/dhruvcodes16",
+      "rating": 1568,
+      "maxRating": 1569,
+      "stars": 2,
+      "solved": 90,
+      "source": "live"
+    },
+    "codeforces": {
+      "username": "laddhruv495",
+      "url": "https://codeforces.com/profile/laddhruv495",
+      "rating": 1195,
+      "maxRating": 1195,
+      "rank": "newbie",
+      "solved": 79,
+      "source": "live"
+    }
+  }
+}
