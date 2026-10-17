@@ -57,7 +57,7 @@ function TimelineBranch({ item }) {
   return (
     <div className="timeline-branch" ref={branchRef}>
       <span className="timeline-branch-label">{item.branchLabel}</span>
-      <svg className="timeline-fork" viewBox="0 0 40 48" aria-hidden="true">
+      <svg className="timeline-fork" viewBox="0 0 40 48" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 0 C0 24 40 16 40 48" />
       </svg>
       <span className="timeline-branch-line" aria-hidden="true" />

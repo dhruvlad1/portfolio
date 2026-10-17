@@ -644,7 +644,7 @@
 
 .timeline-branch-label {
   display: block;
-  padding: 0 0 16px calc(var(--main-x) + var(--branch-offset));
+  padding: 0 0 16px calc(var(--main-x) + var(--branch-offset) + 16px);
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
@@ -663,6 +663,7 @@
   fill: none;
   stroke: var(--border-strong);
   stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
 .timeline-branch-line {
@@ -1075,7 +1076,7 @@
   }
 
   .timeline-branch-label {
-    padding-left: calc(var(--main-x) + var(--branch-offset));
+    padding-left: calc(var(--main-x) + var(--branch-offset) + 12px);
   }
 
   .timeline-fork {
