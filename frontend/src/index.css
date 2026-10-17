@@ -1,15 +1,13 @@
 :root {
-  --bg: #0a0b10;
-  --surface: #11131b;
-  --surface-soft: #0e1017;
-  --surface-raised: #171a24;
-  --text: #eceef5;
-  --muted: #9aa0b4;
-  --accent: #8b9dff;
-  --accent-2: #5eead4;
-  --accent-gradient: linear-gradient(120deg, var(--accent), var(--accent-2));
-  --border: rgba(236, 238, 245, 0.09);
-  --border-strong: rgba(236, 238, 245, 0.2);
+  --bg: #0b0b0c;
+  --surface: #111113;
+  --surface-soft: #0e0e10;
+  --surface-raised: #161618;
+  --text: #e9e7e2;
+  --muted: #8f8d88;
+  --accent: #a9b8ff;
+  --border: rgba(233, 231, 226, 0.08);
+  --border-strong: rgba(233, 231, 226, 0.18);
   --heading: 'Space Grotesk', Arial, sans-serif;
   --body: 'Inter', Arial, sans-serif;
   --mono: 'JetBrains Mono', Consolas, monospace;
@@ -31,8 +29,8 @@
   --font-size-sm: 13px;
   --font-size-md: 14px;
   --radius-sm: 6px;
-  --radius-card: 14px;
-  --radius-button: 10px;
+  --radius-card: 10px;
+  --radius-button: 8px;
   --transition-fast: 180ms ease;
   --transition-base: 220ms ease;
   color: var(--text);
@@ -56,16 +54,6 @@ body {
   min-width: 320px;
   margin: 0;
   background: var(--bg);
-}
-
-body::before {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-radial-gradient(circle at 0 0, color-mix(in srgb, var(--text) 8%, transparent) 0 1px, transparent 1px 4px);
-  content: '';
-  opacity: 0.025;
 }
 
 button,

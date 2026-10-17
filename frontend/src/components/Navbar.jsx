@@ -22,23 +22,23 @@ function Navbar() {
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             onClick={() => setMenuOpen((open) => !open)}
           >
-            {menuOpen ? 'CLOSE' : 'MENU'}
+            {menuOpen ? 'close' : 'menu'}
           </button>
           <nav
             id="primary-navigation"
             className={`nav-links${menuOpen ? ' is-open' : ''}`}
             aria-label="Primary navigation"
           >
-            <a className="nav-link" href="#work" onClick={closeMenu}>Work</a>
-            <a className="nav-link" href="#about" onClick={closeMenu}>About</a>
-            <a className="nav-link" href="#contact" onClick={closeMenu}>Contact</a>
+            <a className="nav-link" href="#work" onClick={closeMenu}>work</a>
+            <a className="nav-link" href="#about" onClick={closeMenu}>about</a>
+            <a className="nav-link" href="#contact" onClick={closeMenu}>contact</a>
             <a className="resume-link mobile-resume-link" href={profile.resumeUrl} onClick={closeMenu}>
-              Resume ↗
+              resume
             </a>
           </nav>
           <div className="nav-meta">
-            <span className="status">Open to opportunities</span>
-            <a className="resume-link" href={profile.resumeUrl}>Resume ↗</a>
+            <span className="status">open to opportunities</span>
+            <a className="resume-link" href={profile.resumeUrl}>resume</a>
           </div>
         </div>
       </header>

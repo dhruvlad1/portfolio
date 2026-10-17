@@ -1,6 +1,5 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Marquee from './components/Marquee'
 import Projects from './components/Projects'
 import About from './components/About'
 import Footer from './components/Footer'
@@ -12,7 +11,6 @@ function App() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <Hero />
-        <Marquee />
         <Projects />
         <About />
       </main>
