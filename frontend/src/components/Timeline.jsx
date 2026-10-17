@@ -34,7 +34,7 @@ function TimelineEntry({ item, delay, child = false }) {
   return (
     <Reveal className={child ? 'timeline-child-reveal' : 'timeline-item-inner'} delay={delay}>
       <div className={child ? 'timeline-child-inner' : 'timeline-item-inner-grid'}>
-        <div className="timeline-period">
+        <div className="timeline-period" data-type={item.type}>
           <span><Rich text={item.period} /></span>
           <small>{item.type}</small>
         </div>

@@ -1,8 +1,7 @@
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
+import Intro from './components/Intro'
 import Projects from './components/Projects'
 import Timeline from './components/Timeline'
-import About from './components/About'
 import CodingSection from './components/CodingSection'
 import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
@@ -22,11 +21,10 @@ function App() {
             <ScrollProgress />
             <Navbar />
             <main id="main-content" tabIndex={-1}>
-              <Hero />
+              <Intro />
               <Timeline />
               <Projects />
               <CodingSection />
-              <About />
             </main>
             <Footer />
           </div>

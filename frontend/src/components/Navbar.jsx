@@ -5,7 +5,7 @@ import ThemeToggle from './ThemeToggle'
 import { ResumeIcon } from './icons'
 import DecryptText from './DecryptText'
 
-const sectionIds = ['timeline', 'work', 'dsa', 'about', 'contact']
+const sectionIds = ['about', 'timeline', 'work', 'dsa', 'contact']
 
 const sectionLabels = {
   dsa: 'DSA',

@@ -3,6 +3,7 @@ import CountUp from './CountUp'
 import DecryptText from './DecryptText'
 import Reveal from './Reveal'
 import CodingStats from './CodingStats'
+import Rich, { stripMarkers } from './Rich'
 
 function CodingSection() {
   const solved = `${codingStats.totals.solved}${codingStats.totals.approx ? '+' : ''}`
@@ -18,12 +19,16 @@ function CodingSection() {
           <div className="coding-headline-stats">
             <div>
               <strong><CountUp value={solved} /></strong>
-              <span>problems solved · LeetCode, CodeChef, Codeforces</span>
+              <span aria-label={stripMarkers('[[problems solved]] · LeetCode, CodeChef, Codeforces')}>
+                <Rich text="[[problems solved]] · LeetCode, CodeChef, Codeforces" />
+              </span>
             </div>
             {codingStats.totals.contests !== null && (
               <div>
                 <strong><CountUp value={String(codingStats.totals.contests)} /></strong>
-                <span>contests attended · across all three</span>
+                <span aria-label={stripMarkers('[[contests attended]] · across all three')}>
+                  <Rich text="[[contests attended]] · across all three" />
+                </span>
               </div>
             )}
           </div>

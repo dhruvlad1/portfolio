@@ -22,7 +22,9 @@ function Projects() {
               <article className="project-row">
                 <ProjectMedia media={project.media} title={project.title} />
                 <div className="project-content">
-                  <span className="project-number">{project.number} · {project.year}</span>
+                  <span className="project-number">
+                    <span>{project.number}</span> · <small>{project.year}</small>
+                  </span>
                   <h3 className="project-title">{project.title}</h3>
                   <p className="project-tagline"><Rich text={project.tagline} /></p>
                   <p className="project-description"><Rich text={project.description} /></p>

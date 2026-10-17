@@ -17,6 +17,14 @@ function NumberValue({ value, suffix = '' }) {
 function CodingStats() {
   return (
     <>
+      <div className="coding-stats-header" aria-hidden="true">
+        <span>platform</span>
+        <span>rating</span>
+        <span>standing</span>
+        <span>contests</span>
+        <span>solved</span>
+        <span />
+      </div>
       <ul className="coding-stats-list">
         {platformRows.map(({ key, name, Icon }) => {
           const platform = codingStats.platforms[key]
