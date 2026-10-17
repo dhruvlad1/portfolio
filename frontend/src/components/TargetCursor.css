@@ -22,7 +22,16 @@
   height: 6px;
   border-radius: 50%;
   background: var(--accent);
-  transform: translate(-50%, -50%);
+  margin: -3px 0 0 -3px;
+}
+
+.target-cursor-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform-origin: center;
 }
 
 .target-cursor-corner {
@@ -33,6 +42,8 @@
   border-style: solid;
   border-width: 0;
   transition: border-color 150ms ease;
+  top: 0;
+  left: 0;
 }
 
 .target-cursor-corner--top-left {

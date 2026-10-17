@@ -18,6 +18,7 @@ function TargetCursor({
   const { enabled } = useCursor() || {}
   const wrapperRef = useRef(null)
   const dotRef = useRef(null)
+  const spinnerRef = useRef(null)
   const cornersRef = useRef([])
 
   useEffect(() => {
@@ -28,10 +29,10 @@ function TargetCursor({
 
     const wrapper = wrapperRef.current
     const dot = dotRef.current
+    const spinner = spinnerRef.current
     const corners = cornersRef.current
-    const pointer = { x: 0, y: 0 }
-    let lockedTarget = null
-    let spinning = null
+    let activeTarget = null
+    let spinTl = null
     let spinDelay = null
     let inside = false
 
@@ -47,66 +48,52 @@ function TargetCursor({
     }
 
     const startSpinning = () => {
-      spinning?.kill()
-      spinning = gsap.timeline({ repeat: -1 })
-        .to(wrapper, { rotation: '+=360', duration: spinDuration, ease: 'none' })
+      spinTl?.kill()
+      gsap.set(spinner, { rotation: 0 })
+      spinTl = gsap.timeline({ repeat: -1 })
+        .to(spinner, { rotation: '+=360', duration: spinDuration, ease: 'none' })
+    }
+
+    const getTargetPositions = (target) => {
+      const rect = target.getBoundingClientRect()
+      const pad = 4
+      const size = 12
+      const wrapperX = Number(gsap.getProperty(wrapper, 'x')) || 0
+      const wrapperY = Number(gsap.getProperty(wrapper, 'y')) || 0
+      return [
+        { x: rect.left - pad - wrapperX, y: rect.top - pad - wrapperY },
+        { x: rect.right + pad - size - wrapperX, y: rect.top - pad - wrapperY },
+        { x: rect.right + pad - size - wrapperX, y: rect.bottom + pad - size - wrapperY },
+        { x: rect.left - pad - wrapperX, y: rect.bottom + pad - size - wrapperY },
+      ]
     }
 
     const releaseTarget = () => {
-      if (!lockedTarget) return
-      lockedTarget = null
+      if (!activeTarget) return
+      activeTarget = null
       wrapper.classList.remove('is-locked')
-      gsap.killTweensOf(wrapper)
-      gsap.to(wrapper, {
-        rotation: 0,
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: true,
+      corners.forEach((corner, index) => {
+        gsap.to(corner, {
+          ...idlePositions[index],
+          duration: 0.25,
+          ease: 'power2.out',
+          overwrite: true,
+        })
       })
-      setIdlePositions()
+      spinTl?.kill()
       spinDelay?.kill()
       spinDelay = gsap.delayedCall(0.25, startSpinning)
     }
 
-    const getTargetPositions = () => {
-      const rect = lockedTarget.getBoundingClientRect()
-      const padding = 4
-      return [
-        { x: rect.left - padding - pointer.x, y: rect.top - padding - pointer.y },
-        { x: rect.right + padding - 12 - pointer.x, y: rect.top - padding - pointer.y },
-        { x: rect.right + padding - 12 - pointer.x, y: rect.bottom + padding - 12 - pointer.y },
-        { x: rect.left - padding - pointer.x, y: rect.bottom + padding - 12 - pointer.y },
-      ]
-    }
-
-    const syncTarget = () => {
-      if (!lockedTarget) return
-      const rect = lockedTarget.getBoundingClientRect()
-      if (!lockedTarget.isConnected || rect.width === 0 || rect.height === 0) {
-        releaseTarget()
-        return
-      }
-
-      const positions = getTargetPositions()
-      corners.forEach((corner, index) => gsap.set(corner, positions[index]))
-    }
-
     const lockTarget = (target) => {
-      if (!target || target === lockedTarget) return
-      spinning?.kill()
+      if (!target || target === activeTarget) return
+      spinTl?.kill()
       spinDelay?.kill()
-      lockedTarget = target
+      gsap.killTweensOf(spinner)
+      activeTarget = target
+      gsap.set(spinner, { rotation: 0 })
       wrapper.classList.add('is-locked')
-      const rotation = Number(gsap.getProperty(wrapper, 'rotation')) || 0
-      const shortestRotation = ((rotation + 180) % 360) - 180
-      gsap.set(wrapper, { rotation: shortestRotation })
-      gsap.to(wrapper, {
-        rotation: 0,
-        duration: 0.25,
-        ease: 'power2.out',
-        overwrite: true,
-      })
-      const positions = getTargetPositions()
+      const positions = getTargetPositions(target)
       corners.forEach((corner, index) => {
         gsap.to(corner, {
           ...positions[index],
@@ -118,11 +105,9 @@ function TargetCursor({
     }
 
     const move = (event) => {
-      pointer.x = event.clientX
-      pointer.y = event.clientY
       inside = true
       wrapper.classList.add('is-visible')
-      gsap.to(wrapper, { x: pointer.x, y: pointer.y, duration: 0.1, ease: 'power3.out', overwrite: true })
+      gsap.to(wrapper, { x: event.clientX, y: event.clientY, duration: 0.1, ease: 'power3.out', overwrite: true })
     }
 
     const mouseOver = (event) => {
@@ -131,9 +116,9 @@ function TargetCursor({
     }
 
     const mouseOut = (event) => {
-      if (!lockedTarget) return
+      if (!activeTarget) return
       const relatedTarget = event.relatedTarget
-      if (!relatedTarget || !lockedTarget.contains(relatedTarget)) releaseTarget()
+      if (!relatedTarget || !activeTarget.contains(relatedTarget)) releaseTarget()
     }
 
     const hide = () => {
@@ -147,21 +132,28 @@ function TargetCursor({
 
     const press = () => {
       gsap.to(dot, { scale: 0.7, duration: 0.15, overwrite: true })
-      gsap.to(wrapper, { scale: 0.92, duration: 0.15, overwrite: true })
+      gsap.to(spinner, { scale: 0.92, duration: 0.15, overwrite: true })
     }
 
     const releasePress = () => {
       gsap.to(dot, { scale: 1, duration: 0.15, overwrite: true })
-      gsap.to(wrapper, { scale: 1, duration: 0.15, overwrite: true })
+      gsap.to(spinner, { scale: 1, duration: 0.15, overwrite: true })
     }
 
     const handleTicker = () => {
-      syncTarget()
+      if (!activeTarget) return
+      const rect = activeTarget.getBoundingClientRect()
+      if (!activeTarget.isConnected || rect.width === 0 || rect.height === 0) {
+        releaseTarget()
+        return
+      }
+      const positions = getTargetPositions(activeTarget)
+      corners.forEach((corner, index) => gsap.set(corner, positions[index]))
     }
 
     if (hideDefaultCursor) document.documentElement.classList.add('has-target-cursor')
-    gsap.set(wrapper, { x: 0, y: 0, rotation: 0, transformOrigin: 'center center' })
-    gsap.set(dot, { xPercent: -50, yPercent: -50 })
+    gsap.set(wrapper, { x: 0, y: 0 })
+    gsap.set(spinner, { rotation: 0 })
     setIdlePositions(0)
     startSpinning()
     window.addEventListener('pointermove', move, { passive: true })
@@ -185,9 +177,9 @@ function TargetCursor({
       window.removeEventListener('pointerdown', press)
       window.removeEventListener('pointerup', releasePress)
       gsap.ticker.remove(handleTicker)
-      spinning?.kill()
+      spinTl?.kill()
       spinDelay?.kill()
-      gsap.killTweensOf([wrapper, dot, ...corners])
+      gsap.killTweensOf([wrapper, dot, spinner, ...corners])
     }
   }, [enabled, hideDefaultCursor, spinDuration, targetSelector])
 
@@ -196,13 +188,15 @@ function TargetCursor({
   return (
     <div className="target-cursor-wrapper" ref={wrapperRef} aria-hidden="true">
       <span className="target-cursor-dot" ref={dotRef} />
-      {['top-left', 'top-right', 'bottom-right', 'bottom-left'].map((position, index) => (
-        <span
-          className={`target-cursor-corner target-cursor-corner--${position}`}
-          ref={(element) => { cornersRef.current[index] = element }}
-          key={position}
-        />
-      ))}
+      <span className="target-cursor-spinner" ref={spinnerRef}>
+        {['top-left', 'top-right', 'bottom-right', 'bottom-left'].map((position, index) => (
+          <span
+            className={`target-cursor-corner target-cursor-corner--${position}`}
+            ref={(element) => { cornersRef.current[index] = element }}
+            key={position}
+          />
+        ))}
+      </span>
     </div>
   )
 }
