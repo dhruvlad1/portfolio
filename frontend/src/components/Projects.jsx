@@ -3,6 +3,7 @@ import ProjectMedia from './ProjectMedia'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
 import { GitHubIcon, LiveIcon } from './icons'
+import DecryptText from './DecryptText'
 
 function Projects() {
   return (
@@ -10,7 +11,7 @@ function Projects() {
       <div className="container">
         <Reveal className="section-heading">
           <div>
-            <span className="eyebrow">featured work</span>
+            <DecryptText className="eyebrow" text="featured work" />
             <h2 className="section-title" id="projects-title">selected work.</h2>
           </div>
           <span className="section-index">/ {String(projects.length).padStart(2, '0')}</span>

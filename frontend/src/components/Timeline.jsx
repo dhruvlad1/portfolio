@@ -4,6 +4,7 @@ import timeline from '../data/timeline'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
 import { BadgeIcon } from './icons'
+import DecryptText from './DecryptText'
 
 function sortByStart(items) {
   return items
@@ -123,7 +124,7 @@ function Timeline() {
       <div className="container">
         <Reveal className="section-heading">
           <div>
-            <span className="eyebrow">background</span>
+            <DecryptText className="eyebrow" text="background" />
             <h2 className="section-title" id="timeline-title">timeline.</h2>
           </div>
         </Reveal>

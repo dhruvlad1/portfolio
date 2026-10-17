@@ -3,6 +3,7 @@ import profile from '../data/profile'
 import useActiveSection from '../hooks/useActiveSection'
 import ThemeToggle from './ThemeToggle'
 import { ResumeIcon } from './icons'
+import DecryptText from './DecryptText'
 
 const sectionIds = ['timeline', 'work', 'about', 'contact']
 
@@ -18,7 +19,7 @@ function Navbar() {
       <header className="navbar">
         <div className="container navbar-inner">
           <a className="wordmark" href="#top" aria-label={`${profile.name} home`}>
-            {profile.name.toUpperCase()}.
+            <DecryptText text={`${profile.name.toUpperCase()}.`} trigger="hover" />
           </a>
           <button
             className="mobile-toggle"

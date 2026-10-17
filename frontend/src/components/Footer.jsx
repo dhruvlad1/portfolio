@@ -1,10 +1,12 @@
-import { Check, Copy } from 'lucide-react'
+import { ArrowUp, Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 import profile from '../data/profile'
 import Reveal from './Reveal'
 import CursorToggle from './CursorToggle'
 import Rich from './Rich'
 import { GitHubIcon, LinkedInIcon, MailIcon, ResumeIcon } from './icons'
+import DecryptText from './DecryptText'
+import MumbaiClock from './MumbaiClock'
 
 function Footer() {
   const [copied, setCopied] = useState(false)
@@ -24,7 +26,7 @@ function Footer() {
     <footer id="contact" tabIndex={-1}>
       <div className="container contact">
         <Reveal>
-          <span className="eyebrow">contact</span>
+          <DecryptText className="eyebrow" text="contact" />
           <h2><Rich text="say [[hi]]." /></h2>
           <p className="contact-description">
             <Rich text="open to [[internships]] and interesting projects. email is the fastest way to reach me." />
@@ -61,12 +63,10 @@ function Footer() {
       </div>
       <div className="container footer">
         <span className="footer-name">{profile.name.toUpperCase()}.</span>
+        <MumbaiClock />
         <div className="footer-links">
-          <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-            <GitHubIcon />GitHub
-          </a>
-          <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-            <LinkedInIcon />LinkedIn
+          <a className="text-link" href="#top">
+            <ArrowUp aria-hidden="true" size={14} strokeWidth={1.75} />top
           </a>
           <CursorToggle />
         </div>

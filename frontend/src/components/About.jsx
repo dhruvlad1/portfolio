@@ -1,6 +1,7 @@
 import about from '../data/about'
 import Reveal from './Reveal'
 import Rich from './Rich'
+import DecryptText from './DecryptText'
 
 function About() {
   return (
@@ -8,7 +9,7 @@ function About() {
       <div className="container">
         <div className="about-grid">
           <Reveal>
-            <span className="eyebrow">about</span>
+            <DecryptText className="eyebrow" text="about" />
             <h2 className="section-title" id="about-title">about.</h2>
           </Reveal>
           <div className="about-details">
@@ -39,7 +40,7 @@ function About() {
           </div>
         </div>
         <Reveal className="skills-block" delay={0.15}>
-          <span className="eyebrow">stack</span>
+          <DecryptText className="eyebrow" text="stack" />
           <dl className="skills-list">
             {about.skills.map((skill) => (
               <div className="skill-row" key={skill.label}>

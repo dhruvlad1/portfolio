@@ -2,12 +2,13 @@ import profile from '../data/profile'
 import { ArrowUpRight } from 'lucide-react'
 import Rich from './Rich'
 import { GitHubIcon, LinkedInIcon } from './icons'
+import DecryptText from './DecryptText'
 
 function Hero() {
   return (
     <section className="hero" id="top" tabIndex={-1} aria-labelledby="hero-title">
       <div className="container hero-content">
-        <span className="eyebrow">Dhruv · Mumbai</span>
+        <DecryptText className="eyebrow" text="Dhruv · Mumbai" trigger="mount" />
         <h1 id="hero-title">i build software, mostly the <em>AI</em> kind.</h1>
         <p className="hero-description">
           <Rich text="computer engineering student at [[VJTI]]. i like making things that work, and then making them work better." />

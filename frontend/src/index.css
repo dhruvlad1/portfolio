@@ -27,9 +27,11 @@
   --space-11: 80px;
   --space-12: 96px;
   --space-13: 140px;
-  --font-size-xs: 12px;
-  --font-size-sm: 13px;
-  --font-size-md: 14px;
+  --font-size-xs: 13px;
+  --font-size-sm: 15px;
+  --font-size-md: 16px;
+  --font-size-link: 15px;
+  --font-size-tagline: 17px;
   --radius-sm: 6px;
   --radius-card: 10px;
   --radius-button: 8px;
