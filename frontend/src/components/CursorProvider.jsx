@@ -3,9 +3,13 @@ import CursorContext from './cursorContext'
 
 function readMode() {
   try {
-    return window.localStorage.getItem('cursor-mode') === 'default' ? 'default' : 'crosshair'
+    const storedMode = window.localStorage.getItem('cursor-mode')
+    if (storedMode === 'crosshair') {
+      window.localStorage.setItem('cursor-mode', 'target')
+    }
+    return storedMode === 'default' ? 'default' : 'target'
   } catch {
-    return 'crosshair'
+    return 'target'
   }
 }
 
@@ -41,9 +45,9 @@ function CursorProvider({ children }) {
 
   const value = useMemo(() => ({
     eligible,
-    enabled: eligible && mode === 'crosshair',
+    enabled: eligible && mode === 'target',
     mode,
-    toggle: () => setCursorMode(mode === 'crosshair' ? 'default' : 'crosshair'),
+    toggle: () => setCursorMode(mode === 'target' ? 'default' : 'target'),
   }), [eligible, mode])
 
   return <CursorContext.Provider value={value}>{children}</CursorContext.Provider>

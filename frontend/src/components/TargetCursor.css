@@ -1,0 +1,67 @@
+.target-cursor-wrapper {
+  position: fixed;
+  z-index: 7;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+.target-cursor-wrapper.is-visible {
+  opacity: 1;
+}
+
+.target-cursor-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+.target-cursor-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: color-mix(in srgb, var(--text) 85%, transparent);
+  border-style: solid;
+  border-width: 0;
+  transition: border-color 150ms ease;
+}
+
+.target-cursor-corner--top-left {
+  border-top-width: 3px;
+  border-left-width: 3px;
+}
+
+.target-cursor-corner--top-right {
+  border-top-width: 3px;
+  border-right-width: 3px;
+}
+
+.target-cursor-corner--bottom-right {
+  border-right-width: 3px;
+  border-bottom-width: 3px;
+}
+
+.target-cursor-corner--bottom-left {
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+}
+
+.target-cursor-wrapper.is-locked .target-cursor-corner {
+  border-color: var(--accent);
+}
+
+html.has-target-cursor,
+html.has-target-cursor a,
+html.has-target-cursor button,
+html.has-target-cursor [role='button'] {
+  cursor: none;
+}

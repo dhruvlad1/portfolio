@@ -7,13 +7,13 @@ import Footer from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
 import ScrollProgress from './components/ScrollProgress'
 import CursorProvider from './components/CursorProvider'
-import Crosshair from './components/Crosshair'
+import TargetCursor from './components/TargetCursor'
 import './App.css'
 
 function App() {
   return (
     <CursorProvider>
-      <Crosshair />
+      <TargetCursor />
       <SmoothScroll>
         <div className="site-shell">
           <ScrollProgress />
