@@ -5,8 +5,8 @@ function Hero() {
   return (
     <section className="hero" id="top" tabIndex={-1} aria-labelledby="hero-title">
       <div className="container hero-content">
-        <span className="eyebrow">dhruv · mumbai</span>
-        <h1 id="hero-title">i build software, mostly the <em>ai</em> kind.</h1>
+        <span className="eyebrow">Dhruv · Mumbai</span>
+        <h1 id="hero-title">i build software, mostly the <em>AI</em> kind.</h1>
         <p className="hero-description">
           computer engineering student at VJTI. i like making things that work, and then
           making them work better.
@@ -19,10 +19,10 @@ function Hero() {
           <span className="social-label">find me on</span>
           <div className="social-links">
             <a href={profile.github} target="_blank" rel="noreferrer">
-              github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
-              linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
           </div>
         </div>

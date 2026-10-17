@@ -32,7 +32,7 @@ function Projects() {
                   </div>
                   <div className="project-links">
                     <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">
-                      github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+                      GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
                     </a>
                     {project.links.live && (
                       <a className="text-link" href={project.links.live} target="_blank" rel="noreferrer">

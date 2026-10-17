@@ -79,7 +79,7 @@ function TimelineBranch({ item }) {
         aria-hidden="true"
         style={{ scaleY: shouldReduceMotion ? 1 : branchLineScale }}
       />
-      <ol aria-label="experiences at vjti">
+      <ol aria-label="experiences at VJTI">
         {item.children.map((child, index) => (
           <li key={child.id}>
             <TimelineEntry item={child} child delay={Math.min(index, 3) * 0.06} />

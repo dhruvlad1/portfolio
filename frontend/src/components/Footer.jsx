@@ -47,10 +47,10 @@ function Footer() {
           </div>
           <div className="contact-links">
             <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-              github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
             <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-              linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
             </a>
             <a className="text-link" href={profile.resumeUrl}>
               resume <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
@@ -62,10 +62,10 @@ function Footer() {
         <span className="footer-name">{profile.name.toUpperCase()}.</span>
         <div className="footer-links">
           <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
-            github <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+            GitHub <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
           </a>
           <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
-            linkedin <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+            LinkedIn <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
           </a>
           <CursorToggle />
         </div>

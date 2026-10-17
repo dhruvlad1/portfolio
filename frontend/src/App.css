@@ -24,7 +24,6 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   line-height: 1.2;
-  text-transform: lowercase;
 }
 
 .eyebrow::before {
@@ -171,7 +170,6 @@
   color: var(--text);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  text-transform: lowercase;
   transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
 }
 
@@ -408,7 +406,6 @@
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--font-size-xs);
-  text-transform: lowercase;
 }
 
 .media-play-button,
@@ -1053,7 +1050,6 @@ footer {
     display: block;
     font-family: var(--mono);
     font-size: var(--font-size-xs);
-    text-transform: lowercase;
   }
 
   .nav-links {
