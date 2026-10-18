@@ -876,6 +876,7 @@ footer { --section-color: var(--hue-rose); }
 
 .timeline-dot.is-ignited:not(.is-current) {
   background: var(--accent);
+  border-color: var(--accent);
 }
 
 .timeline-dot--branch.is-ignited {
@@ -1099,6 +1100,7 @@ a .hl-warm {
   position: absolute;
   z-index: 3;
   top: var(--main-line-start, 0px);
+  margin-top: -5px;
   left: calc(var(--main-x) - 5px);
   width: 10px;
   height: 10px;
@@ -1120,6 +1122,7 @@ a .hl-warm {
 
 .timeline-comet--branch {
   top: var(--branch-line-start, 0px);
+  margin-top: -4px;
   left: calc(var(--main-x) + var(--branch-offset) - 4px);
   width: 8px;
   height: 8px;

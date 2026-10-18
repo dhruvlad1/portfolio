@@ -66,6 +66,9 @@ function TimelineEntry({ item, delay, child = false, progress, lineRef, lineMetr
 
   useEffect(() => {
     if (shouldReduceMotion) return undefined
+    // The initial value must reflect the current scroll position before subscribing.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIgnited(progress.get() >= ratio)
     return progress.on('change', (value) => setIgnited(value >= ratio))
   }, [progress, ratio, shouldReduceMotion])
 
