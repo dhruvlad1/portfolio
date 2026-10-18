@@ -7,26 +7,27 @@ import { GitHubIcon, LinkedInIcon } from './icons'
 import DecryptText from './DecryptText'
 import Reveal from './Reveal'
 import ScrollRevealText from './ScrollRevealText'
+import HeroDots from './HeroDots'
 
 function Name() {
   const shouldReduceMotion = useReducedMotion()
   const words = [
-    { text: 'Dhruv', italic: false },
-    { text: 'Lad', italic: true },
+    { text: 'DHRUV', outlined: false },
+    { text: 'LAD', outlined: true },
   ]
   let letterIndex = 0
 
   return (
     <h1 className="intro-name" id="intro-name" aria-label="Dhruv Lad">
       {words.map((word, wordIndex) => (
-        <span className="intro-name-word" key={word.text}>
+        <span className={`intro-name-word${word.outlined ? ' intro-name-word--outlined' : ''}`} key={word.text}>
           {word.text.split('').map((letter) => {
             const index = letterIndex
             letterIndex += 1
             const Letter = shouldReduceMotion ? 'span' : motion.span
             return (
               <Letter
-                className={word.italic ? 'intro-name-letter intro-name-letter--italic' : 'intro-name-letter'}
+                className="intro-name-letter"
                 key={`${word.text}-${letter}`}
                 aria-hidden="true"
                 {...(!shouldReduceMotion && {
@@ -50,9 +51,10 @@ function Intro() {
   return (
     <section className="intro" id="top" tabIndex={-1} aria-labelledby="intro-name">
       <div className="container intro-hero">
+        <HeroDots />
         <DecryptText className="eyebrow" text="hi, i'm" trigger="mount" />
         <Name />
-        <p className="intro-tagline">i build software, mostly the <em>AI</em> kind.</p>
+        <p className="intro-tagline">software, models, and a mild obsession with <em>edge cases</em>.</p>
         <p className="hero-description">
           <Rich text="computer engineering student at [[VJTI]]. i like making things that work, and then making them work better." />
         </p>
