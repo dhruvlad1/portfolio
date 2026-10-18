@@ -8,6 +8,7 @@ import SmoothScroll from './components/SmoothScroll'
 import ScrollProgress from './components/ScrollProgress'
 import CursorProvider from './components/CursorProvider'
 import TargetCursor from './components/TargetCursor'
+import CursorGrid from './components/CursorGrid'
 import ThemeProvider from './components/ThemeProvider'
 import './App.css'
 
@@ -16,6 +17,7 @@ function App() {
     <ThemeProvider>
       <CursorProvider>
         <TargetCursor />
+        <CursorGrid />
         <SmoothScroll>
           <div className="site-shell">
             <ScrollProgress />

@@ -7,7 +7,6 @@ import { GitHubIcon, LinkedInIcon } from './icons'
 import DecryptText from './DecryptText'
 import Reveal from './Reveal'
 import ScrollRevealText from './ScrollRevealText'
-import HeroDots from './HeroDots'
 
 function Name() {
   const shouldReduceMotion = useReducedMotion()
@@ -51,7 +50,6 @@ function Intro() {
   return (
     <section className="intro" id="top" tabIndex={-1} aria-labelledby="intro-name">
       <div className="container intro-hero">
-        <HeroDots />
         <DecryptText className="eyebrow" text="hi, i'm" trigger="mount" />
         <Name />
         <p className="intro-tagline">software, models, and a mild obsession with <em>edge cases</em>.</p>
@@ -72,6 +70,8 @@ function Intro() {
               <LinkedInIcon />LinkedIn
             </a>
           </div>
+          <div className="intro-corner intro-corner--left" aria-hidden="true">MUMBAI / IN</div>
+          <div className="intro-corner intro-corner--right" aria-hidden="true">19.0760° N · 72.8777° E</div>
         </div>
       </div>
 
@@ -102,7 +102,7 @@ function Intro() {
           <DecryptText className="eyebrow" text="stack" />
           <dl className="skills-list">
             {about.skills.map((skill) => (
-              <div className="skill-row" key={skill.label}>
+              <div className="skill-row" data-category={skill.label} key={skill.label}>
                 <dt>{skill.label}</dt>
                 <dd>{skill.items.map((item, index) => (
                   <span key={item}>

@@ -4,6 +4,7 @@ function useActiveSection(ids) {
   const [activeSection, setActiveSection] = useState(null)
 
   useEffect(() => {
+    document.documentElement.dataset.activeSection = ''
     const visibleSections = new Set()
     const sections = ids
       .map((id) => document.getElementById(id))
@@ -32,8 +33,15 @@ function useActiveSection(ids) {
     })
 
     sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      delete document.documentElement.dataset.activeSection
+    }
   }, [ids])
+
+  useEffect(() => {
+    if (activeSection) document.documentElement.dataset.activeSection = activeSection
+  }, [activeSection])
 
   return activeSection
 }

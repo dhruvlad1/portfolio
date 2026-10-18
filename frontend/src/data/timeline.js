@@ -52,6 +52,7 @@ const timeline = [
     location: 'Matunga, Mumbai',
     summary: 'minor in [[cybersecurity]]. coursework: DSA, OS, DBMS, OOP, discrete maths.',
     badges: ['CGPA {{7.89}}'],
+    tag: 'HEAD → main',
     current: true,
     branchLabel: 'things i did at VJTI',
     children: [

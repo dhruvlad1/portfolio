@@ -1,5 +1,5 @@
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 import timeline from '../data/timeline'
 import Reveal from './Reveal'
 import Rich, { stripMarkers } from './Rich'
@@ -21,15 +21,39 @@ function sortByStart(items) {
 const sortedTimeline = sortByStart(timeline).map((item) => (
   item.children ? { ...item, children: sortByStart(item.children) } : item
 ))
+const timelineYears = [2012, 2022, 2024, 2024, 2024, 2024, 2025, 2025]
 
-function TimelineEntry({ item, delay, child = false }) {
+function TimelineEntry({ item, delay, child = false, progress, lineRef }) {
+  const entryRef = useRef(null)
   const dotRef = useRef(null)
   const shouldReduceMotion = useReducedMotion()
-  const dotInView = useInView(dotRef, {
-    once: true,
-    margin: '-20% 0px -20% 0px',
+  const [ignited, setIgnited] = useState(() => shouldReduceMotion)
+  const [ratio, setRatio] = useState(0)
+  const { scrollYProgress: entryProgress } = useScroll({
+    target: entryRef,
+    offset: ['start 0.8', 'end 0.2'],
   })
-  const dotFilled = shouldReduceMotion || dotInView
+  const animatedContentOpacity = useTransform(entryProgress, [0, 0.2, 0.8, 1], [0.45, 1, 1, 0.45])
+  const contentOpacity = shouldReduceMotion ? 1 : animatedContentOpacity
+
+  useEffect(() => {
+    if (!entryRef.current || !lineRef.current) return undefined
+    const measure = () => {
+      const entry = entryRef.current.getBoundingClientRect()
+      const line = lineRef.current.getBoundingClientRect()
+      setRatio(Math.max(0, Math.min(1, (entry.top - line.top) / Math.max(line.height, 1))))
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(entryRef.current)
+    observer.observe(lineRef.current)
+    measure()
+    return () => observer.disconnect()
+  }, [lineRef])
+
+  useEffect(() => {
+    if (shouldReduceMotion) return undefined
+    return progress.on('change', (value) => setIgnited(value >= ratio))
+  }, [progress, ratio, shouldReduceMotion])
 
   return (
     <Reveal className={child ? 'timeline-child-reveal' : 'timeline-item-inner'} delay={delay}>
@@ -38,14 +62,18 @@ function TimelineEntry({ item, delay, child = false }) {
           <span><Rich text={item.period} /></span>
           <small>{item.type}</small>
         </div>
-        <div className={child ? 'timeline-content timeline-child-content' : 'timeline-content'}>
+        <motion.div
+          ref={entryRef}
+          className={child ? 'timeline-content timeline-child-content' : 'timeline-content'}
+          style={{ opacity: contentOpacity }}
+        >
           <motion.span
             ref={dotRef}
-            className={`timeline-dot${item.current ? ' is-current' : ''}${child && dotFilled ? ' is-filled' : ''}`}
+            className={`timeline-dot${item.current ? ' is-current' : ''}${ignited ? ' is-ignited' : ''}${child ? ' timeline-dot--branch' : ''}`}
             aria-hidden="true"
             initial={false}
-            animate={child ? { scale: dotFilled ? 1 : 0.85 } : undefined}
-            transition={{ duration: 0.15 }}
+            animate={{ scale: ignited ? [1, 1.15, 1] : 1 }}
+            transition={{ duration: 0.6 }}
           />
           <h3>{item.title}</h3>
           <p className="timeline-org">
@@ -60,6 +88,7 @@ function TimelineEntry({ item, delay, child = false }) {
               {item.badges.map((badge) => <span key={stripMarkers(badge)}><Rich text={badge} /></span>)}
             </div>
           )}
+          {item.tag && <span className="timeline-tag">{item.tag}</span>}
           {item.link && (
             <a
               className="timeline-proof-link"
@@ -72,7 +101,7 @@ function TimelineEntry({ item, delay, child = false }) {
               {item.link.label}
             </a>
           )}
-        </div>
+        </motion.div>
       </div>
     </Reveal>
   )
@@ -80,18 +109,28 @@ function TimelineEntry({ item, delay, child = false }) {
 
 function TimelineBranch({ item }) {
   const branchRef = useRef(null)
+  const [branchHeight, setBranchHeight] = useState(0)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
     target: branchRef,
     offset: ['start 85%', 'end 60%'],
   })
   const branchLineScale = useTransform(scrollYProgress, [0, 1], [0, 1])
+  const branchCometY = useTransform(scrollYProgress, [0, 1], [0, branchHeight])
+  const branchCometOpacity = useTransform(scrollYProgress, [0, 0.06, 0.94, 1], [0, 1, 1, 0])
+  const forkProgress = useTransform(scrollYProgress, [0, 0.15], [0, 1])
+  useEffect(() => {
+    if (!branchRef.current) return undefined
+    const observer = new ResizeObserver(([entry]) => setBranchHeight(entry.contentRect.height))
+    observer.observe(branchRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="timeline-branch" ref={branchRef}>
       <span className="timeline-branch-label">{item.branchLabel}</span>
       <svg className="timeline-fork" viewBox="0 0 40 48" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 0 C0 24 40 16 40 48" />
+        <motion.path d="M0 0 C0 24 40 16 40 48" style={{ pathLength: shouldReduceMotion ? 1 : forkProgress }} />
       </svg>
       <span className="timeline-branch-line" aria-hidden="true" />
       <motion.span
@@ -99,10 +138,11 @@ function TimelineBranch({ item }) {
         aria-hidden="true"
         style={{ scaleY: shouldReduceMotion ? 1 : branchLineScale }}
       />
+      {!shouldReduceMotion && <motion.span className="timeline-comet timeline-comet--branch" style={{ scaleY: branchCometY, opacity: branchCometOpacity }} aria-hidden="true" />}
       <ol aria-label={`${stripMarkers(item.branchLabel)} (${item.title}), oldest first`}>
         {item.children.map((child, index) => (
           <li key={child.id}>
-            <TimelineEntry item={child} child delay={Math.min(index, 3) * 0.06} />
+            <TimelineEntry item={child} child lineRef={branchRef} progress={scrollYProgress} delay={Math.min(index, 3) * 0.06} />
           </li>
         ))}
       </ol>
@@ -118,6 +158,23 @@ function Timeline() {
     offset: ['start 80%', 'end 60%'],
   })
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1])
+  const [listHeight, setListHeight] = useState(0)
+  const cometY = useTransform(scrollYProgress, [0, 1], [0, listHeight])
+  const cometOpacity = useTransform(scrollYProgress, [0, 0.06, 0.94, 1], [0, 1, 1, 0])
+  useEffect(() => {
+    if (!listRef.current) return undefined
+    const observer = new ResizeObserver(([entry]) => setListHeight(entry.contentRect.height))
+    observer.observe(listRef.current)
+    return () => observer.disconnect()
+  }, [])
+  const [year, setYear] = useState(timelineYears[0])
+  useEffect(() => {
+    if (shouldReduceMotion) return undefined
+    return scrollYProgress.on('change', (value) => {
+      const index = Math.min(timelineYears.length - 1, Math.floor(value * timelineYears.length))
+      setYear(value >= 0.98 ? new Date().getFullYear() : timelineYears[index])
+    })
+  }, [scrollYProgress, shouldReduceMotion])
 
   return (
     <section className="section timeline" id="timeline" tabIndex={-1} aria-labelledby="timeline-title">
@@ -135,14 +192,21 @@ function Timeline() {
             aria-hidden="true"
             style={{ scaleY: shouldReduceMotion ? 1 : lineScale }}
           />
+          {!shouldReduceMotion && <motion.span className="timeline-comet" style={{ y: cometY, opacity: cometOpacity }} aria-hidden="true" />}
+          <div className="timeline-list-content">
           <ol aria-label="education and experience, oldest first">
             {sortedTimeline.map((item, index) => (
               <li className="timeline-item" key={item.id}>
-                <TimelineEntry item={item} delay={Math.min(index, 4) * 0.05} />
+                <TimelineEntry item={item} lineRef={listRef} progress={scrollYProgress} delay={Math.min(index, 4) * 0.05} />
                 {item.children && <TimelineBranch item={item} />}
               </li>
             ))}
           </ol>
+          </div>
+          <aside className="timeline-year-ticker" aria-hidden="true">
+            <motion.span key={year} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.12 }}>{year}</motion.span>
+            <small>year</small>
+          </aside>
         </div>
       </div>
     </section>

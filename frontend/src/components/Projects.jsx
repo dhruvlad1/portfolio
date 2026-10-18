@@ -19,7 +19,7 @@ function Projects() {
         <div className="project-list">
           {projects.map((project) => (
             <Reveal className="project-reveal" key={project.id}>
-              <article className="project-row">
+              <article className="project-row" data-hue={project.hue}>
                 <ProjectMedia media={project.media} title={project.title} />
                 <div className="project-content">
                   <span className="project-number">

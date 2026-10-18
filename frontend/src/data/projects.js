@@ -1,6 +1,7 @@
 export const projects = [
   {
     id: 'finsight',
+    hue: 'accent',
     number: '01',
     title: 'FinSight',
     year: '2026',
@@ -24,6 +25,7 @@ export const projects = [
   },
   {
     id: 'voyexa',
+    hue: 'mint',
     number: '02',
     title: 'Voyexa',
     year: '2026',
@@ -47,6 +49,7 @@ export const projects = [
   },
   {
     id: 'gestureflow',
+    hue: 'accent-2',
     number: '03',
     title: 'GestureFlow',
     year: '2026',
@@ -70,6 +73,7 @@ export const projects = [
   },
   {
     id: 'visual-semantic-encoder',
+    hue: 'rose',
     number: '04',
     title: 'Visual Semantic Encoder',
     year: '2026',
