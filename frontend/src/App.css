@@ -345,22 +345,6 @@ footer { --section-color: var(--hue-rose); }
   mask-image: radial-gradient(circle 320px at var(--cursor-x, 50%) var(--cursor-y, 35%), #000 0%, transparent 100%);
 }
 
-.intro-corner {
-  position: absolute;
-  bottom: 24px;
-  z-index: 2;
-  color: color-mix(in srgb, var(--muted) 70%, transparent);
-  font-family: var(--mono);
-  font-size: 15px;
-}
-
-.intro-corner--left { left: 0; }
-.intro-corner--right { right: 0; }
-
-@media (max-width: 1023px) {
-  .intro-corner { display: none; }
-}
-
 .intro-name {
   display: flex;
   flex-wrap: wrap;
@@ -785,7 +769,7 @@ footer { --section-color: var(--hue-rose); }
   }
 }
 
-.timeline-list > ol {
+.timeline-list-content > ol {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -796,8 +780,9 @@ footer { --section-color: var(--hue-rose); }
 .timeline-line {
   position: absolute;
   z-index: 0;
-  top: 0;
-  bottom: 0;
+  top: var(--main-line-start, 0px);
+  height: var(--main-line-span, 100%);
+  bottom: auto;
   left: var(--main-x);
   width: 1px;
   background: var(--border-strong);
@@ -805,8 +790,8 @@ footer { --section-color: var(--hue-rose); }
 
 .timeline-line--foreground {
   z-index: 1;
-  bottom: auto;
-  height: 100%;
+  top: var(--main-line-start, 0px);
+  height: var(--main-line-span, 100%);
   background: var(--accent);
   transform-origin: top;
 }
@@ -830,7 +815,7 @@ footer { --section-color: var(--hue-rose); }
   border-top: 0;
 }
 
-.timeline-list > ol > .timeline-item:last-child {
+.timeline-list-content > ol > .timeline-item:last-child {
   padding-bottom: 40px;
 }
 
@@ -839,6 +824,10 @@ footer { --section-color: var(--hue-rose); }
   font-family: var(--mono);
   font-size: var(--font-size-xs);
   line-height: 1.5;
+}
+
+.timeline-text {
+  min-width: 0;
 }
 
 .timeline-period small {
@@ -875,7 +864,8 @@ footer { --section-color: var(--hue-rose); }
   height: 8px;
   border: 1px solid var(--border-strong);
   border-radius: 50%;
-  background: transparent;
+  background: var(--bg);
+  color: var(--accent);
   transition: background-color 150ms ease, transform 150ms ease;
 }
 
@@ -891,6 +881,7 @@ footer { --section-color: var(--hue-rose); }
 .timeline-dot--branch.is-ignited {
   background: var(--accent-2);
   border-color: var(--accent-2);
+  color: var(--accent-2);
 }
 
 .timeline-dot.is-ignited::after {
@@ -1031,10 +1022,15 @@ a .hl-warm {
   vector-effect: non-scaling-stroke;
 }
 
+.timeline-fork-base {
+  stroke: color-mix(in srgb, var(--accent-2) 42%, transparent) !important;
+}
+
 .timeline-branch-line {
   position: absolute;
-  top: 48px;
-  bottom: 40px;
+  top: var(--branch-line-start, 0px);
+  height: var(--branch-line-span, 100%);
+  bottom: auto;
   left: calc(var(--main-x) + var(--branch-offset));
   width: 1px;
   background: color-mix(in srgb, var(--accent-2) 42%, transparent);
@@ -1042,8 +1038,8 @@ a .hl-warm {
 
 .timeline-branch-line--foreground {
   z-index: 1;
-  bottom: auto;
-  height: calc(100% - 88px);
+  top: var(--branch-line-start, 0px);
+  height: var(--branch-line-span, 100%);
   background: var(--accent-2);
   transform-origin: top;
 }
@@ -1102,22 +1098,37 @@ a .hl-warm {
 .timeline-comet {
   position: absolute;
   z-index: 3;
-  top: 0;
+  top: var(--main-line-start, 0px);
   left: calc(var(--main-x) - 5px);
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 -48px 20px -16px color-mix(in srgb, var(--accent) 55%, transparent);
   pointer-events: none;
 }
 
+.timeline-comet::before {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to top, var(--accent), transparent);
+  content: '';
+  transform: translateX(-50%);
+}
+
 .timeline-comet--branch {
+  top: var(--branch-line-start, 0px);
   left: calc(var(--main-x) + var(--branch-offset) - 4px);
   width: 8px;
   height: 8px;
   background: var(--accent-2);
-  box-shadow: 0 -32px 14px -12px color-mix(in srgb, var(--accent-2) 55%, transparent);
+}
+
+.timeline-comet--branch::before {
+  height: 32px;
+  background: linear-gradient(to top, var(--accent-2), transparent);
 }
 
 .about-details {
@@ -1689,13 +1700,11 @@ footer {
   }
 
   .timeline-branch-line {
-    top: 32px;
-    bottom: 32px;
     left: var(--branch-offset);
   }
 
   .timeline-branch-line--foreground {
-    height: calc(100% - 64px);
+    height: var(--branch-line-span, 100%);
   }
 
   .timeline-child-inner {

@@ -70,8 +70,6 @@ function Intro() {
               <LinkedInIcon />LinkedIn
             </a>
           </div>
-          <div className="intro-corner intro-corner--left" aria-hidden="true">MUMBAI / IN</div>
-          <div className="intro-corner intro-corner--right" aria-hidden="true">19.0760° N · 72.8777° E</div>
         </div>
       </div>
 
