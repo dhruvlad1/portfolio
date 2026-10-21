@@ -20,14 +20,14 @@ function CodingSection() {
             <div>
               <strong><CountUp value={solved} /></strong>
               <span aria-label={stripMarkers('[[problems solved]] · LeetCode, CodeChef, Codeforces')}>
-                <Rich text="[[problems solved]] · LeetCode, CodeChef, Codeforces" />
+                <Rich text="[[problems solved]]" /> <span className="coding-platform-names">· LeetCode, CodeChef, Codeforces</span>
               </span>
             </div>
             {codingStats.totals.contests !== null && (
               <div>
                 <strong><CountUp value={String(codingStats.totals.contests)} /></strong>
                 <span aria-label={stripMarkers('[[contests attended]] · across all three')}>
-                  <Rich text="[[contests attended]] · across all three" />
+                  <Rich text="[[contests attended]]" /> · across all three
                 </span>
               </div>
             )}

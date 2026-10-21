@@ -116,7 +116,7 @@ function DecryptText({
       <span className="decrypt-text-size" aria-hidden="true">{text}</span>
       <span className="decrypt-text-animation" aria-hidden="true">
         {[...displayText].map((character, index) => (
-          <span className={index < revealedCount || STATIC_CHARS.has(text[index]) ? 'decrypt-text-revealed' : 'decrypt-text-scrambled'} key={`${index}-${text[index]}`}>
+          <span className={index < revealedCount || STATIC_CHARS.has(text[index]) ? 'decrypt-text-revealed' : 'decrypt-scrambled'} key={`${index}-${text[index]}`}>
             {character}
           </span>
         ))}

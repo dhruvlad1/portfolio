@@ -6,6 +6,7 @@ function ProjectMedia({ media, title }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isFading, setIsFading] = useState(false)
   const [failedMedia, setFailedMedia] = useState(() => new Set())
+  const [detectedAspects, setDetectedAspects] = useState({})
   const videoRef = useRef(null)
   const frameRef = useRef(null)
   const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -15,7 +16,17 @@ function ProjectMedia({ media, title }) {
     if (!failedMedia.has(item.src)) indices.push(index)
     return indices
   }, [])
-  const aspect = activeMedia?.aspect || '16 / 10'
+  const firstAspect = media[0]?.aspect || detectedAspects[media[0]?.src] || '16 / 10'
+  const aspect = activeMedia?.aspect || detectedAspects[activeMedia?.src] || firstAspect
+  const aspectParts = aspect.split('/').map(Number)
+  const isPortrait = aspectParts.length === 2 && aspectParts[0] / aspectParts[1] < 1
+
+  const handleMediaLoad = (item, width, height) => {
+    if (item.aspect || !width || !height) return
+    setDetectedAspects((current) => (
+      current[item.src] ? current : { ...current, [item.src]: `${width} / ${height}` }
+    ))
+  }
 
   const pauseVideo = useCallback((reset = false) => {
     const video = videoRef.current
@@ -100,7 +111,7 @@ function ProjectMedia({ media, title }) {
   if (!activeMedia || activeMediaFailed) {
     return (
       <div className={`project-media${isFading ? ' is-fading' : ''}`}>
-        <div className="media-frame media-placeholder" style={{ aspectRatio: '16 / 10' }}>
+        <div className="media-frame media-placeholder" style={{ aspectRatio: firstAspect }}>
           <span>{title}</span>
         </div>
         {availableIndices.length > 1 && (
@@ -121,12 +132,12 @@ function ProjectMedia({ media, title }) {
   return (
     <div className={`project-media${isFading ? ' is-fading' : ''}`}>
       <div
-        className={`media-frame${activeMedia.aspect === '9 / 16' ? ' media-frame--portrait' : ''}`}
+        className={`media-frame${isPortrait ? ' media-frame--portrait' : ''}`}
         ref={frameRef}
         style={{ aspectRatio: aspect }}
       >
         {activeMedia.type === 'image' ? (
-          <img src={activeMedia.src} alt={activeMedia.alt} loading="lazy" decoding="async" onError={() => markMediaFailed(activeMedia.src)} />
+          <img src={activeMedia.src} alt={activeMedia.alt} loading="lazy" decoding="async" onLoad={(event) => handleMediaLoad(activeMedia, event.currentTarget.naturalWidth, event.currentTarget.naturalHeight)} onError={() => markMediaFailed(activeMedia.src)} />
         ) : (
           <>
             <video
@@ -137,6 +148,7 @@ function ProjectMedia({ media, title }) {
               preload="metadata"
               poster={activeMedia.poster}
               aria-label={activeMedia.alt}
+              onLoadedMetadata={(event) => handleMediaLoad(activeMedia, event.currentTarget.videoWidth, event.currentTarget.videoHeight)}
               onError={() => markMediaFailed(activeMedia.src)}
             >
               <source src={activeMedia.src} onError={() => markMediaFailed(activeMedia.src)} />

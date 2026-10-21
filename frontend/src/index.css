@@ -8,6 +8,7 @@
   /* --accent = ideas/keywords, --accent-2 = numbers/results. */
   --accent: #a9b8ff;
   --accent-2: #f2b58a;
+  --term: #4ade80;
   --hue-mint: #8fe3b4;
   --hue-rose: #f29ab0;
   --border: rgba(233, 231, 226, 0.08);
@@ -55,6 +56,7 @@
   --muted: #8f8d88;
   --accent: #a9b8ff;
   --accent-2: #f2b58a;
+  --term: #4ade80;
   --hue-mint: #8fe3b4;
   --hue-rose: #f29ab0;
   --border: rgba(233, 231, 226, 0.08);
@@ -73,6 +75,7 @@
   --muted: #66645f;
   --accent: #3f51d6;
   --accent-2: #a8470a;
+  --term: #13733a;
   --hue-mint: #1b6f45;
   --hue-rose: #b3365a;
   --border: rgba(22, 22, 24, 0.1);
@@ -92,6 +95,7 @@
     --muted: #66645f;
     --accent: #3f51d6;
     --accent-2: #a8470a;
+    --term: #13733a;
     --hue-mint: #1b6f45;
     --hue-rose: #b3365a;
     --border: rgba(22, 22, 24, 0.1);
