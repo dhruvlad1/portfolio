@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-10-23",
+  "asOf": "2026-10-24",
   "totals": {
-    "solved": 770,
+    "solved": 771,
     "approx": false,
-    "contests": 47
+    "contests": 48
   },
   "platforms": {
     "leetcode": {
@@ -12,7 +12,7 @@
       "rating": 1981,
       "maxRating": 1981,
       "badge": "Knight",
-      "solved": 601,
+      "solved": 602,
       "contests": 28,
       "source": "live",
       "contestSource": "live"
@@ -30,11 +30,11 @@
     "codeforces": {
       "username": "laddhruv495",
       "url": "https://codeforces.com/profile/laddhruv495",
-      "rating": 1074,
-      "maxRating": 1074,
-      "rank": "newbie",
+      "rating": 1204,
+      "maxRating": 1204,
+      "rank": "pupil",
       "solved": 79,
-      "contests": 4,
+      "contests": 5,
       "source": "live"
     }
   }
