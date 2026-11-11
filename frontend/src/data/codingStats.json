@@ -1,7 +1,7 @@
 {
-  "asOf": "2026-11-10",
+  "asOf": "2026-11-11",
   "totals": {
-    "solved": 791,
+    "solved": 792,
     "approx": false,
     "contests": 50
   },
@@ -12,7 +12,7 @@
       "rating": 1984,
       "maxRating": 1984,
       "badge": "Knight",
-      "solved": 620,
+      "solved": 621,
       "contests": 29,
       "source": "live",
       "contestSource": "live"
