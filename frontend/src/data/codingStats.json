@@ -1,9 +1,9 @@
 {
-  "asOf": "2026-11-11",
+  "asOf": "2026-11-12",
   "totals": {
-    "solved": 792,
+    "solved": 796,
     "approx": false,
-    "contests": 50
+    "contests": 51
   },
   "platforms": {
     "leetcode": {
@@ -12,7 +12,7 @@
       "rating": 1984,
       "maxRating": 1984,
       "badge": "Knight",
-      "solved": 621,
+      "solved": 622,
       "contests": 29,
       "source": "live",
       "contestSource": "live"
@@ -20,11 +20,11 @@
     "codechef": {
       "username": "dhruvcodes16",
       "url": "https://www.codechef.com/users/dhruvcodes16",
-      "rating": 1571,
+      "rating": 1552,
       "maxRating": 1571,
       "stars": 2,
-      "solved": 90,
-      "contests": 15,
+      "solved": 93,
+      "contests": 16,
       "source": "live"
     },
     "codeforces": {
