@@ -1,19 +1,19 @@
 {
-  "asOf": "2026-11-25",
+  "asOf": "2026-11-26",
   "totals": {
-    "solved": 811,
+    "solved": 812,
     "approx": false,
-    "contests": 52
+    "contests": 53
   },
   "platforms": {
     "leetcode": {
       "username": "dhruvcodes16",
       "url": "https://leetcode.com/u/dhruvcodes16/",
-      "rating": 1984,
-      "maxRating": 1984,
+      "rating": 2000,
+      "maxRating": 2000,
       "badge": "Knight",
-      "solved": 637,
-      "contests": 29,
+      "solved": 638,
+      "contests": 30,
       "source": "live",
       "contestSource": "live"
     },
